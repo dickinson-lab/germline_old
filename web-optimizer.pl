@@ -4,6 +4,9 @@ use warnings;
 
 use 5.010;
 use CGI;
+use BerkeleyDB;
+use Math::Random;
+use Seqscore;
 
 my $q = CGI->new();
 say $q->header(), $q->start_html();
