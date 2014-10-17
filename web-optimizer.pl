@@ -6,8 +6,7 @@ use 5.010;
 use CGI;
 use BerkeleyDB;
 use Math::Random;
-use lib '/libs';
-use Seqscore;
+use lib '/libs/Seqscore.pm';
 
 my $q = CGI->new();
 say $q->header(), $q->start_html();
