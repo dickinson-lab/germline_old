@@ -18,11 +18,11 @@ say "<h1>Results</h1>";
 
 print "<p>Processing Input...</p>";
 
-
-
 my $inseq = $q->param('sequence');
 my $safeseq = $q->escapeHTML($inseq);
 
-say "<p>$safeseq</p>";
+say "<p> Input: $safeseq";
+$sequence_lib -> db_get($safeseq, my $score);
+say "Score: $score </p>";
 
 say $q->end_html();
