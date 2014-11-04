@@ -9,8 +9,6 @@ use Bio::Seq;
 use Math::Random;
 use lib '/libs/Seqscore.pm';
 
-say "<p>Loaded modules ok</p>";
-
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 
 my $sequence_lib = new BerkeleyDB::Btree
@@ -57,5 +55,5 @@ sub error {
     say("<h2>Error</h2>");
     say("<p>$errormsg</p>");
     say $q->end_html();
-    #die;
+    die;
 }
