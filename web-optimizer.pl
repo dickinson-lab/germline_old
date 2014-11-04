@@ -5,7 +5,7 @@ use warnings;
 use 5.010;
 use CGI;
 use BerkeleyDB;
-#use Bio::Seq;
+use Bio::Seq;
 use Math::Random;
 use lib '/libs/Seqscore.pm';
 
@@ -52,7 +52,8 @@ say "Score: $score </p>";
 
 say $q->end_html();
 
-sub error(my $errormsg) {
+sub error {
+    my $errormsg = shift;
     say("<h2>Error</h2>");
     say("<p>$errormsg</p>");
     say $q->end_html();
