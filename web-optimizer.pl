@@ -27,11 +27,13 @@ say "<p>$safeseq OK here</p>";
 my $seqtype = $q->param('seq_type');
 
 # Check sequence for invalid characters
-if ( ! $seqobj->validate_seq($seqobj->seq()) ) {
+my $bio_seq = Bio::Seq->new();
+
+if ( ! $bio_seq->validate_seq($safeseq) ) {
     error("You entered an invalid sequence");
 }
 
-my $seqobj = Bio::Seq->new();
+my $seqobj = Bio::Seq->new( -sequence => $safeseq );
 
 if ($seqtype eq 'AA') {
     if ( $seqobj->alphabet ne 'protein' ) {
