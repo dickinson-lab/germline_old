@@ -22,15 +22,17 @@ say $q->header(), $q->start_html();
 my $inseq = $q->param('sequence');
 my $safeseq = $q->escapeHTML($inseq);
 my $seqobj = Bio::Seq->new( -seq => $safeseq );
+say "<p>OK here</p>";
 my $seqtype = $q->param('seq_type');
 
-# Check sequence; if DNA input, convert to AA
+# Check sequence
+if ( ! $seqobj->validate_seq($seqobj->seq()) ) {
+    error("You entered an invalid sequence");
+}
+
 if ($seqtype eq 'AA') {
     if ( $seqobj->alphabet ne 'protein' ) {
         error("You selected \"Amino Acid\", but your input doesn't appear to be an amino acid sequence. Please check the sequence and try again");
-    }
-    if ( ! $seqobj->validate_seq($seqobj->seq()) ) {
-        error("You entered an invalid sequence");
     }
 }
 
