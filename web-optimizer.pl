@@ -5,7 +5,7 @@ use warnings;
 use 5.010;
 use CGI;
 use BerkeleyDB;
-use Bio::Seq;
+#use Bio::Seq;
 use Math::Random;
 use lib '/libs/Seqscore.pm';
 
