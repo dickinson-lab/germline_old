@@ -10,10 +10,8 @@ use lib '/libs/Seqscore.pm';
 
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 
-say "<p> Data Dir: $datadir </p>";
-
 my $sequence_lib = new BerkeleyDB::Btree
-    -Filename => '/libs/sequence_lib_scores.db';
+    -Filename => join('',$datadir,'sequence_lib_scores.db');
 
 my $q = CGI->new();
 say $q->header(), $q->start_html();
