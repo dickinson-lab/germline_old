@@ -44,8 +44,8 @@ if ($seqtype eq 'AA') {
     $AAseq = $seqobj->seq();
     say "<p>$AAseq</p>";
 } elsif ($seqtype eq 'DNA') {
-    say "<p>Well, I got this far</p>";
-    if ( $seqobj->alphaet ne 'dna') {
+    
+    if ( $seqobj->alphabet ne 'dna') {
         error("You selected \"DNA,\" but your input doesn't appear to be a nucleotide sequence. Please check the sequence and try again.");
     }
     $AAseq = $seqobj->translate();
@@ -76,3 +76,5 @@ sub error {
     say $q->end_html();
     exit;
 }
+
+#say "<p>Well, I got this far</p>";
