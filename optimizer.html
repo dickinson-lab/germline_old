@@ -16,7 +16,7 @@
             
         
         <form action="web-optimizer.pl" method="post" name="frmOptimization">
-            <h1>Sequence</h1>
+            <h2>Sequence</h2>
         
             <div class="row">
                 <div class="field_name">Sequence Name (optional)</div>
@@ -28,7 +28,13 @@
                 <div class="field_value"><textarea id="sequence" name="sequence" rows="8" cols="90"></textarea></div>
             </div>
             
-            <h1>Options</h1>
+            <div class="row">
+                <div class="field_value">
+                <input type="radio" name="seq_type" value="AA" checked>Amino Acid Sequence<br>
+                <input type="radio" name="seq_type" value="DNA">DNA Sequence</div>
+            </div>
+            
+            <h2>Options</h2>
             
             <div class="row">
                 <div class="field_name">&nbsp;</div>
