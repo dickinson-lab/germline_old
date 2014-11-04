@@ -23,7 +23,6 @@ my $inseq = $q->param('sequence');
 my $safeseq = $q->escapeHTML($inseq);
 $safeseq =~ s/\s+//g; #Remove whitespace
 my $seqtype = $q->param('seq_type');
-say "<p>$safeseq</p>";
 
 # Check sequence for invalid characters
 my $bio_seq = Bio::Seq->new();
@@ -42,7 +41,6 @@ if ($seqtype eq 'AA') {
         error("You selected \"Amino Acid,\" but your input doesn't appear to be an amino acid sequence. Please check the sequence and try again.");
     }
     $AAseq = $seqobj->seq();
-    say "<p>$AAseq</p>";
 } elsif ($seqtype eq 'DNA') {
     
     if ( $seqobj->alphabet ne 'dna') {
@@ -50,7 +48,6 @@ if ($seqtype eq 'AA') {
     }
     my $trans = $seqobj->translate();
     $AAseq = $trans->seq();
-    say "<p>$AAseq</p>";
 } else {
     error("Program error :-\("); #You'd only get this if the HTML form returned the wrong value.
 }
