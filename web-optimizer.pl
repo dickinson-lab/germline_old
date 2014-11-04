@@ -9,6 +9,8 @@ use Bio::Seq;
 use Math::Random;
 use lib '/libs/Seqscore.pm';
 
+say "<p>Loaded modules ok</p>";
+
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 
 my $sequence_lib = new BerkeleyDB::Btree
