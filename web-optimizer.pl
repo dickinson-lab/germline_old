@@ -21,14 +21,17 @@ say $q->header(), $q->start_html();
 # Get input sequence
 my $inseq = $q->param('sequence');
 my $safeseq = $q->escapeHTML($inseq);
-my $seqobj = Bio::Seq->new( -seq => $safeseq );
-say "<p>OK here</p>";
+$safeseq =~ s/\s+//g; #Remove whitespace
+
+say "<p>$safeseq OK here</p>";
 my $seqtype = $q->param('seq_type');
 
-# Check sequence
+# Check sequence for invalid characters
 if ( ! $seqobj->validate_seq($seqobj->seq()) ) {
     error("You entered an invalid sequence");
 }
+
+my $seqobj = Bio::Seq->new();
 
 if ($seqtype eq 'AA') {
     if ( $seqobj->alphabet ne 'protein' ) {
