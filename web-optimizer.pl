@@ -48,7 +48,8 @@ if ($seqtype eq 'AA') {
     if ( $seqobj->alphabet ne 'dna') {
         error("You selected \"DNA,\" but your input doesn't appear to be a nucleotide sequence. Please check the sequence and try again.");
     }
-    $AAseq = $seqobj->translate();
+    my $trans = $seqobj->translate();
+    $AAseq = $trans->seq();
     say "<p>$AAseq</p>";
 } else {
     error("Program error :-\("); #You'd only get this if the HTML form returned the wrong value.
