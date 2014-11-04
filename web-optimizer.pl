@@ -54,5 +54,5 @@ sub error(my $errormsg) {
     say("<h2>Error</h2>");
     say("<p>$errormsg</p>");
     say $q->end_html();
-    die;
+    #die;
 }
