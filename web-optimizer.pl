@@ -8,6 +8,8 @@ use BerkeleyDB;
 use Math::Random;
 use lib '/libs/Seqscore.pm';
 
+say "<p> Data Dir: OPENSHIFT_DATA_DIR </p>";
+
 my $sequence_lib = new BerkeleyDB::Btree
     -Filename => '/libs/sequence_lib_scores.db';
 
