@@ -13,10 +13,19 @@ my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 my $sequence_lib = new BerkeleyDB::Btree
     -Filename => join('',$datadir,'sequence_lib_scores.db');
 
+# Set up output page
 my $q = CGI->new();
 say $q->header(), $q->start_html();
 
-say "<h1>Results</h1>";
+# Process and display sequence name
+my $in_name = $q->param('name');
+my $safename = $q->escapeHTML($in_name);
+if ( $safename ) {
+    say "<h2>Results for sequence $safename</h2>";
+} else {
+    say "<h2>Results</h2>";
+}
+
 
 print "<p>Processing Input...</p>";
 
