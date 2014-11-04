@@ -33,7 +33,7 @@ if ( ! $bio_seq->validate_seq($safeseq) ) {
 }
 
 # If sequence is ok, make a Bio::Seq object out of it
-my $seqobj = Bio::Seq->new( -sequence => $safeseq );
+my $seqobj = Bio::Seq->new( -seq => $safeseq );
 
 # Check sequence for correct type, generate amino acid sequence
 my $AAseq;
