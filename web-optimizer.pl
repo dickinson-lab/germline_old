@@ -37,7 +37,6 @@ my $seqobj = Bio::Seq->new( -seq => $safeseq );
 
 # Check sequence for correct type, generate amino acid sequence
 my $AAseq;
-say "<p>$seqobj->alphabet</p>";
 if ($seqtype eq 'AA') {
     if ( $seqobj->alphabet ne 'protein' ) {
         error("You selected \"Amino Acid,\" but your input doesn't appear to be an amino acid sequence. Please check the sequence and try again.");
@@ -45,6 +44,7 @@ if ($seqtype eq 'AA') {
     $AAseq = $seqobj->seq();
     say "<p>$AAseq</p>";
 } elsif ($seqtype eq 'DNA') {
+    say "<p>Well, I got this far</p>";
     if ( $seqobj->alphaet ne 'dna') {
         error("You selected \"DNA,\" but your input doesn't appear to be a nucleotide sequence. Please check the sequence and try again.");
     }
