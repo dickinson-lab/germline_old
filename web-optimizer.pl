@@ -82,10 +82,11 @@ if ( $safename ) {
 }
 
 # If input was a nucleotide sequence, display score
-say "<p>Input Sequence Score: $input_sequence_score";
-say "Lowest Word Score: $input_lowest_score \($input_n_w_lowest_score words\)";
-say "</p><br><br>";
-
+if ($seqtype eq 'DNA') {
+    say "<p>Input Sequence Score: $input_sequence_score";
+    say "Lowest Word Score: $input_lowest_score \($input_n_w_lowest_score words\)";
+    say "</p><br><br>";
+}
 
 # Display optimized sequence and score
 say "<p>Opmized Sequence Score: $optimization_results->{'Sequence_score'}";
