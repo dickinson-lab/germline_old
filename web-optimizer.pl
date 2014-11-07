@@ -85,15 +85,15 @@ if ( $safename ) {
 
 # If input was a nucleotide sequence, display score
 if ($seqtype eq 'DNA') {
-    say "<p>Input Sequence Score: $input_sequence_score";
-    say "Lowest Word Score: $input_lowest_score \($input_n_w_lowest_score words\)";
+    say join ('', "<p>Input Sequence Score: " sprintf("%.1f", $input_sequence_score) "\n");
+    say join ('', "Lowest Word Score: " sprintf("%.1f", $input_lowest_score) " \($input_n_w_lowest_score words\) \n");
     say "</p><br><br>";
 }
 
 # Display optimized sequence and score
-say "<p>Opmized Sequence Score: $optimization_results->{'Sequence_score'}";
-say "Lowest Word Score: $optimization_results->{'Lowest_score'} \($optimization_results->{'Words_w_lowest_score'} words\)";
-say "Sequence:";
+say join ('', "<p>Opmized Sequence Score: " sprintf("%.1f", $optimization_results->{'Sequence_score'}) "\n");
+say join ('', "Lowest Word Score: " sprintf("%.1f", $optimization_results->{'Lowest_score'}) " \($optimization_results->{'Words_w_lowest_score'} words\)\n");
+say "Sequence:\n";
 say join( "\n", unpack( "(A60)*", $optimization_results->{'Sequence'}) );
 say "</p>";
 
