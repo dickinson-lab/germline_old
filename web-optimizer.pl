@@ -7,8 +7,9 @@ use CGI;
 use BerkeleyDB;
 use Bio::Seq;
 use Math::Random;
-use lib '/libs/Seqscore.pm';
-use lib '/libs/OptimizerTools.pm';
+use lib '/libs/';
+use Seqscore;
+use OptimizerTools;
 
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 
