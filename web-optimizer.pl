@@ -18,7 +18,7 @@ my $sequence_lib = new BerkeleyDB::Btree
 ### SET UP ###
 
 # Set up output page
-my $q = CGI->new();
+our $q = CGI->new();
 say $q->header(), $q->start_html();
 
 # Get input
@@ -59,9 +59,10 @@ if ($seqtype eq 'AA') {
 
 ### IF A NUCLEOTIDE SEQUENCE WAS ENTERED, CALCULATE ITS SCORE ###
 
+my ( $input_sequence_score, $input_lowest_score, $input_n_w_lowest_score );
 if ($seqtype eq 'DNA') {
     my @input_coding_sequence = unpack("(A3)*", $seqobj->seq());
-    my ( $input_sequence_score, $input_lowest_score, $input_n_w_lowest_score ) = Seqscore::score_sequence( \@input_coding_sequence, $sequence_lib );
+    ( $input_sequence_score, $input_lowest_score, $input_n_w_lowest_score ) = Seqscore::score_sequence( \@input_coding_sequence, $sequence_lib );
 }
 
 
