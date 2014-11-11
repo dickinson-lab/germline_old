@@ -226,7 +226,7 @@ sub addintrons {
     
     # Figure out how many introns to add and their approximate positions
     my $seq_length = length($inseq);
-    my $n_introns = floor($seq_length / 300);
+    my $n_introns = ceil($seq_length / 300);
     if ($n_introns == 0 ) {  # Makes sure at least one intron is added, since we only call this function if we want to add introns
         $n_introns = 1;
     }
@@ -278,7 +278,7 @@ sub addintrons {
     }
     
     # Add the last exon to the sequence
-    $outseq = $outseq . join ('', @CDS[ $last_exon_end+1 .. -1] );
+    $outseq = $outseq . join ('', @CDS[ $last_exon_end+1 .. $#CDS] );
     
     # Return the results
     return $outseq;
