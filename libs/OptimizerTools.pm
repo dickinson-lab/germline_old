@@ -11,6 +11,7 @@ use strict;
 use warnings;
 use BerkeleyDB;
 use Math::Random;
+use POSIX;
 use lib 'libs/Seqscore.pm';
 
 #use Data::Dumper;
@@ -219,6 +220,72 @@ sub optimize {
 
 ################################################################################################
 
+sub addintrons {
+    my $inseq = shift;
+    my @CDS = split //, $inseq;
+    
+    # Figure out how many introns to add and their approximate positions
+    my $seq_length = length($inseq);
+    my $n_introns = floor($seq_length / 300);
+    if ($n_introns == 0 ) {  # Makes sure at least one intron is added, since we only call this function if we want to add introns
+        $n_introns = 1;
+    }
+    my $exon_length = floor( $seq_length / ($n_introns+1) );
+    
+    # Split the sequence into exons, add an intron after each
+    my $last_exon_end = 0;
+    my $outseq = '';
+    L: for (my $l = 0; $l < $n_introns; $l++) {
+        
+        # Find the beginning of the exon
+        my $exon_start;
+        if ($l == 0) {
+            $exon_start = 0;
+        } else {
+            $exon_start = $last_exon_end + 1;
+        } # If this is the first exon, it starts at the beginning of the sequence; otherwise, it starts at the next base after the end of the last exon.
+        
+        # Find the end of the exon
+        my $exon_end;
+        my $offset = 0;
+        my $found_junction = 0;
+        M: while (!$found_junction) { # This loop looks for the AGR motif
+            my $start_point = $exon_length * ($l+1) + $offset;
+            my $candidate_junction = join ('', @CDS[ $start_point .. $start_point+2 ] );
+            if ( $candidate_junction =~ /AG[AG]/ ) {
+                $exon_end = $start_point + 1;
+                $found_junction = 1;
+            } else {
+                $offset = $offset + 1;
+            }
+        }
+        $last_exon_end = $exon_end;
+        
+        # Add the exon to the output sequence
+        $outseq = $outseq . join ('', @CDS[ $exon_start .. $exon_end]);
+        
+        # Generate the intron
+        my $good_intron = 0;
+        N: while (!$good_intron) {
+            my $candidate_intron =  random_dna(0.3, 35); # Parameters: GC content (between 0 and 1), length
+            next N if ($candidate_intron =~ /[ct]ag/ ); # Makes sure that the intron doesn't contain splice acceptors
+            $good_intron = $candidate_intron;
+        }
+        my $intron = join ('', 'gtaagttt', $good_intron, 'ttttcag');
+        
+        # Add the intron to the output sequence
+        $outseq = $outseq . $intron;
+    }
+    
+    # Add the last exon to the sequence
+    $outseq = $outseq . join ('', @CDS[ $last_exon_end+1 .. -1] );
+    
+    # Return the results
+    return $outseq;
+}
+
+################################################################################################
+
 sub word_options {
     my $position = shift;
     my $seqdata_ref = shift;
@@ -239,6 +306,33 @@ sub word_options {
     }
     
     return $options_sub;
+}
+
+################################################################################################
+
+sub random_dna {
+    my $pctGC = shift;
+    my $length = shift;
+    my @sequence;
+    W: for (my $w = 0; $w < $length; $w++) {
+        my $letter;
+        if (random_uniform() < $pctGC) {
+            if (random_uniform() < 0.5) {
+                $letter = 'g';
+            } else {
+                $letter = 'c';
+            }
+        } else {
+            if (random_uniform() < 0.5) {
+                $letter = 'a';
+            } else {
+                $letter = 't';
+            }
+        }
+        push @sequence, $letter;
+    }
+    my $sequence = join('', @sequence);
+    return $sequence;
 }
 
 ################################################################################################

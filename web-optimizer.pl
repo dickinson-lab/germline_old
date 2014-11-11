@@ -72,6 +72,14 @@ if ($seqtype eq 'DNA') {
 my $optimization_results = OptimizerTools::optimize($sequence_lib, $AAseq);
 
 
+### OPTIONALLY ADD INTRONS ###
+
+my $optseq_w_introns;
+if ($add_introns) {
+    $optseq_w_introns = OptimizerTools::addintrons( $optimization_results->{'Sequence'} );
+}
+
+
 ### DISPLAY RESULTS ###
 
 # Process and display sequence name
@@ -85,17 +93,21 @@ if ( $safename ) {
 
 # If input was a nucleotide sequence, display score
 if ($seqtype eq 'DNA') {
-    say join ('', "<p>Input Sequence Score: ", sprintf("%.1f", $input_sequence_score), "\n");
-    say join ('', "Lowest Word Score: ", sprintf("%.1f", $input_lowest_score), " \($input_n_w_lowest_score words\) \n");
+    say join ('', "<p>Input Sequence Score: ", sprintf("%.1f", $input_sequence_score), "</p>");
+    say join ('', "<p>Lowest Word Score: ", sprintf("%.1f", $input_lowest_score), " \($input_n_w_lowest_score words\)</p>");
     say "</p><br><br>";
 }
 
 # Display optimized sequence and score
-say join ('', "<p>Opmized Sequence Score: ", sprintf("%.1f", $optimization_results->{'Sequence_score'}), "\n");
-say join ('', "Lowest Word Score: ", sprintf("%.1f", $optimization_results->{'Lowest_score'}), " \($optimization_results->{'Words_w_lowest_score'} words\)\n");
-say "Sequence:\n";
-say join( "\n", unpack( "(A60)*", $optimization_results->{'Sequence'}) );
-say "</p>";
+say join ('', "<p>Opmized Sequence Score: ", sprintf("%.1f", $optimization_results->{'Sequence_score'}), "</p>");
+say join ('', "<p>Lowest Word Score: ", sprintf("%.1f", $optimization_results->{'Lowest_score'}), " \($optimization_results->{'Words_w_lowest_score'} words\)</p>");
+say "<p>Sequence:</p>";
+if ($add_introns) {
+    say join( "\n", "<p>", unpack( "(A60)*", $optseq_w_introns), "</p>");
+}else {
+    say join( "\n", "<p>", unpack( "(A60)*", $optimization_results->{'Sequence'}) );
+    say "</p>";
+}
 
 say $q->end_html();
 
