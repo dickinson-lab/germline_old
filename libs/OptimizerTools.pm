@@ -267,7 +267,7 @@ sub addintrons {
         # Generate the intron
         my $good_intron = 0;
         N: while (!$good_intron) {
-            my $candidate_intron =  random_dna(0.3, 35); # Parameters: GC content (between 0 and 1), length
+            my $candidate_intron =  random_dna(0.3, 36); # Parameters: GC content (between 0 and 1), length
             next N if ($candidate_intron =~ /[ct]ag/ ); # Makes sure that the intron doesn't contain splice acceptors
             $good_intron = $candidate_intron;
         }
