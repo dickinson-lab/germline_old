@@ -256,7 +256,7 @@ sub addintrons {
                 $exon_end = $start_point + 1;
                 $found_junction = 1;
             } else {
-                $offset = $offset + 1;
+                $offset = $offset - 1;
             }
         }
         $last_exon_end = $exon_end;
