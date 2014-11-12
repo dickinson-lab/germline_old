@@ -14,6 +14,7 @@ $| = 1; # Unbuffered output
 
 if (param('Spawn')) {
     # setup monitoring page then spawn the monitored process
+    print header(), start_html("Spawning"), h1("Spawning");
     my $cache = CGI::Session->new ();
     my $session = $cache->id();
    
@@ -25,7 +26,8 @@ if (param('Spawn')) {
     if ($kid) {
         param('Spawn', 0);
         param('session', $session);
-        #print "I ran this \n";
+        print "I ran this \n";
+        print end_html();
         print redirect (self_url());
     } else {
         close STDOUT;
