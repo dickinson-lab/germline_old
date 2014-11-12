@@ -23,7 +23,8 @@ if (param('Spawn')) {
     if ($kid) {
         delete_all();
         param('session', $session);
-        print redirect (self_url());
+        print "I ran this \n";
+        #print redirect (self_url());
     } else {
         close STDOUT;
         unless (open F, "-|") {
