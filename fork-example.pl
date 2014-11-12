@@ -28,8 +28,8 @@ if (param('Spawn')) {
         Delete_all();
         param('session', $session);
         print redirect (self_url());
-    } else {
         close STDOUT;
+    } else {
         unless (open F, "-|") {
             open STDERR, ">&=1";
             system("perl long-process.pl", $session) or die "Cannot execute the long process\n";
