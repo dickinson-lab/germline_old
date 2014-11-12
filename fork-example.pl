@@ -21,7 +21,6 @@ if (param('Spawn')) {
     defined (my $kid = fork) or die "Cannot fork: $!\n";
     if ($kid) {
         # parent redirects browser to monitor session
-        $session->delete_all();
         param('session', $session);
         print redirect (self_url());
     } else {
