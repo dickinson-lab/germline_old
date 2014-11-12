@@ -34,7 +34,7 @@ if (param('Spawn')) {
         print redirect (self_url());
         print end_html();
     } else {
-        $r->cleanup_for_exec();
+        #$r->cleanup_for_exec();
         chdir '/' or die "Can't chdir to /: $!";
         close STDIN;
         close STDOUT;
