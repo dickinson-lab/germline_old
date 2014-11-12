@@ -15,12 +15,12 @@ if (param('Spawn')) {
     my $session = $cache->id();
    
     $cache->param ('status', "wait ..."); # no data yet
-    Delete_all();
+    #Delete_all();
    
     #FORK
     defined (my $kid = fork) or die "Cannot fork: $!\n";
     if ($kid) {
-        Delete_all();
+        delete_all();
         param('session', $session);
         print redirect (self_url());
     } else {
