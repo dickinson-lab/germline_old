@@ -21,7 +21,7 @@ if (param('Spawn')) {
     #FORK
     defined (my $kid = fork) or die "Cannot fork: $!\n";
     if ($kid) {
-        $cache->clear();
+        param('Spawn', 0);
         param('session', $session);
         #print "I ran this \n";
         print redirect (self_url());
