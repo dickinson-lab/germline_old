@@ -31,7 +31,7 @@ if (param('Spawn')) {
         close STDOUT;
         unless (open F, "-|") {
             open STDERR, ">&=1";
-            LongProcess::longprocess($session);
+            system(long-process.pl, $session) or die "Cannot execute the long process\n";
         }
 
         exit 0; # all done
