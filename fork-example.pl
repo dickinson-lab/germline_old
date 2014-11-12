@@ -14,7 +14,7 @@ $CGI::POST_MAX        = 10240; # Maximum number of bytes per post
 $| = 1; # Unbuffered output
 
 my $r = shift;
-$r->send_http_header("text/plain");
+print header();
 
 if (param('Spawn')) {
     # setup monitoring page then spawn the monitored process
