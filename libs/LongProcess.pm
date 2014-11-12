@@ -24,3 +24,5 @@ sub longprocess{
     $cache->flush ();
     exit 0; # all done
 }
+
+1;
