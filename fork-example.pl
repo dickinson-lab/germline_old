@@ -13,7 +13,7 @@ $CGI::POST_MAX        = 10240; # Maximum number of bytes per post
 
 $| = 1; # Unbuffered output
 
-my $r = shfit;
+my $r = shift;
 $r->send_http_header("text/plain");
 
 if (param('Spawn')) {
