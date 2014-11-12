@@ -28,6 +28,7 @@ if (param('Spawn')) {
         print redirect (self_url());
         close STDOUT;
     } else {
+        close STDOUT;
         unless (open F, "-|") {
             open STDERR, ">&=1";
             system("perl long-process.pl", $session) or die "Cannot execute the long process\n";
