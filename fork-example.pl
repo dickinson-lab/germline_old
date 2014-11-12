@@ -4,6 +4,7 @@ use CGI::Pretty qw(:standard :cgi-lib);
 use CGI::Carp qw(fatalsToBrowser); # Remove for production code
 use CGI::Session;
 use Apache2::SubProcess;
+use POSIX 'setsid';
 #use lib '/libs/';
 #use LongProcess;
 #use CGI qw(:all delete_all escapeHTML);
@@ -26,19 +27,20 @@ if (param('Spawn')) {
     
     #FORK
     $SIG{CHLD} = 'IGNORE';
+    my $ofh = select(STDOUT); $|=1; select $ofh;
     
     defined (my $kid = fork) or die "Cannot fork: $!\n";
     if ($kid) {
         Delete_all();
         param('session', $session);
         print redirect (self_url());
-        print end_html();
     } else {
         #$r->cleanup_for_exec();
         chdir '/' or die "Can't chdir to /: $!";
         close STDIN;
         close STDOUT;
         close STDERR;
+        setsid();
         
         unless (open F, "-|") {
             open STDERR, ">&=1";
