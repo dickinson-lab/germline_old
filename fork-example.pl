@@ -3,6 +3,7 @@ use strict;
 use CGI::Pretty qw(:standard :cgi-lib);
 use CGI::Carp qw(fatalsToBrowser); # Remove for production code
 use CGI::Session;
+use Apache2::SubProcess;
 #use lib '/libs/';
 #use LongProcess;
 #use CGI qw(:all delete_all escapeHTML);
@@ -12,23 +13,33 @@ $CGI::POST_MAX        = 10240; # Maximum number of bytes per post
 
 $| = 1; # Unbuffered output
 
+my $r = shfit;
+$r->send_http_header("text/plain");
+
 if (param('Spawn')) {
     # setup monitoring page then spawn the monitored process
-    print header(), start_html("Spawning"), h1("Spawning");
+    print start_html("Spawning"), h1("Spawning");
     my $cache = CGI::Session->new ();
     my $session = $cache->id();
    
     $cache->param ('status', "wait ..."); # no data yet
     
     #FORK
+    $SIG{CHLD} = 'IGNORE';
+    
     defined (my $kid = fork) or die "Cannot fork: $!\n";
     if ($kid) {
         Delete_all();
         param('session', $session);
         print redirect (self_url());
-        close STDOUT;
+        print end_html();
     } else {
+        $r->cleanup_for_exec();
+        chdir '/' or die "Can't chdir to /: $!";
+        close STDIN;
         close STDOUT;
+        close STDERR;
+        
         unless (open F, "-|") {
             open STDERR, ">&=1";
             system("perl long-process.pl", $session) or die "Cannot execute the long process\n";
@@ -56,7 +67,7 @@ if (param('Spawn')) {
  
 } else {
     # display spawn form
-    print header(), start_html("Spawn"), h1("Spawn");
+    print start_html("Spawn"), h1("Spawn");
     print start_form();
     print submit('Spawn', 'spawn');
    
@@ -72,7 +83,7 @@ CORE::exit(0);
 
 
 sub showError {
-    print header(), start_html("SpawnError"), h1("Spawn Error");
+    print start_html("SpawnError"), h1("Spawn Error");
     print p (shift);
    
     my %params = Vars ();
