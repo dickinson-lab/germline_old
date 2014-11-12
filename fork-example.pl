@@ -16,7 +16,7 @@ if (param('Spawn')) {
     my $session = $cache->id();
    
     $cache->param ('status', "wait ..."); # no data yet
-    #Delete_all();
+    Delete_all();
    
     #FORK
     defined (my $kid = fork) or die "Cannot fork: $!\n";
