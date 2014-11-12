@@ -24,7 +24,7 @@ if (param('Spawn')) {
     
     unless (open F, "-|") {
         open STDERR, ">&=1";
-        exec "/long-process.pl";
+        exec "/long-process.pl", $session;
         die "Cannot execute program";
     }
 
