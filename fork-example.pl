@@ -27,7 +27,7 @@ if (param('Spawn')) {
         #print end_html();
         Delete_all();
         param('session', $session);
-        print redirect (self_url());
+        print redirect (self_url() . '?session=' . $session);
         close STDOUT;
     } else {
         unless (open F, "-|") {
