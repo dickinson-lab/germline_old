@@ -22,10 +22,9 @@ if (param('Spawn')) {
     
     #FORK
     defined (my $kid = fork) or die "Cannot fork: $!\n";
-    print "I ran this \n";
-    print end_html();
-
     if ($kid) {
+        print "I ran this \n";
+        print end_html();
         Delete_all();
         param('Spawn', 0);
         param('session', $session);
