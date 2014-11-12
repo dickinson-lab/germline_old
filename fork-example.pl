@@ -3,7 +3,7 @@ use strict;
 use CGI::Pretty qw(:standard :cgi-lib);
 use CGI::Carp qw(fatalsToBrowser); # Remove for production code
 use CGI::Session;
-use CGI qw(:all delete_all escapeHTML);
+#use CGI qw(:all delete_all escapeHTML);
 
 $CGI::DISABLE_UPLOADS = 1;         # Disable uploads
 $CGI::POST_MAX        = 10240; # Maximum number of bytes per post
@@ -21,10 +21,10 @@ if (param('Spawn')) {
     #FORK
     defined (my $kid = fork) or die "Cannot fork: $!\n";
     if ($kid) {
-        delete_all();
+        $cache->clear();
         param('session', $session);
-        print "I ran this \n";
-        #print redirect (self_url());
+        #print "I ran this \n";
+        print redirect (self_url());
     } else {
         close STDOUT;
         unless (open F, "-|") {
