@@ -3,8 +3,8 @@ use strict;
 use CGI::Pretty qw(:standard :cgi-lib);
 use CGI::Carp qw(fatalsToBrowser); # Remove for production code
 use CGI::Session;
-use lib '/libs/';
-use LongProcess;
+#use lib '/libs/';
+#use LongProcess;
 #use CGI qw(:all delete_all escapeHTML);
 
 $CGI::DISABLE_UPLOADS = 1;         # Disable uploads
@@ -31,7 +31,7 @@ if (param('Spawn')) {
         close STDOUT;
         unless (open F, "-|") {
             open STDERR, ">&=1";
-            system(long-process.pl, $session) or die "Cannot execute the long process\n";
+            system("perl long-process.pl", $session) or die "Cannot execute the long process\n";
         }
 
         exit 0; # all done
