@@ -26,7 +26,6 @@ if (param('Spawn')) {
         print "I ran this \n";
         #print end_html();
         Delete_all();
-        param('Spawn', 0);
         param('session', $session);
         print redirect (self_url());
     } else {
