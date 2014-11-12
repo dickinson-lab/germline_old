@@ -25,7 +25,7 @@ if (param('Spawn')) {
     if ($kid) {
         Delete_all();
         param('session', $session);
-        wait (2);
+        sleep(2);
         print redirect (self_url());
         close STDOUT;
     } else {
