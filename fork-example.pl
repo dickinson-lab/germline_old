@@ -17,19 +17,24 @@ if (param('Spawn')) {
     $cache->param ('status', "wait ..."); # no data yet
     Delete_all();
    
-    # parent redirects browser to monitor session
-    param('session', $session);
-    print redirect (self_url());
-    close STDOUT;
-    
-    unless (open F, "-|") {
-        open STDERR, ">&=1";
-        exec "/long-process.pl", $session;
-        die "Cannot execute program";
-    }
+    #FORK
+    defined (my $kid = fork) or die "Cannot fork: $!\n";
+    if ($kid) {
+        # parent redirects browser to monitor session
+        $session->delete_all();
+        param('session', $session);
+        print redirect (self_url());
+    } else {
+        close STDOUT;
+        unless (open F, "-|") {
+            open STDERR, ">&=1";
+            exec "/long-process.pl", $session;
+            die "Cannot execute program";
+        }
 
-    exit 0; # all done
- 
+        exit 0; # all done
+    }
+    
 } elsif (my $session = param('session')) {
     # display monitored data
     my $cache = CGI::Session->new ($session);
