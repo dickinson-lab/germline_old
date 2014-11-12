@@ -34,7 +34,7 @@ if (param('Spawn')) {
             system("perl long-process.pl", $session) or die "Cannot execute the long process\n";
         }
 
-        exit(0); # all done
+        CORE::exit(0); # all done
     }
     
 } elsif (my $session = param('session')) {
@@ -44,7 +44,7 @@ if (param('Spawn')) {
    
     if (! $data) { # something is wrong
         showError ("Cache data not available");
-        exit(0);
+        CORE::exit(0);
     }
    
     my $headStr = $data eq 'Completed' ? '' : "<meta http-equiv=refresh content=5>";
@@ -68,7 +68,7 @@ if (param('Spawn')) {
     print end_form(), end_html();
 }
 
-exit(0);
+CORE::exit(0);
 
 
 sub showError {
