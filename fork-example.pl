@@ -29,7 +29,7 @@ if (param('Spawn')) {
         close STDOUT;
         unless (open F, "-|") {
             open STDERR, ">&=1";
-            exec "/long-process.cgi", $session;
+            exec "/long-process.pl", $session;
             die "Cannot execute program";
         }
 
