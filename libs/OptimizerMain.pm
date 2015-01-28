@@ -21,7 +21,7 @@ sub start_optimization : StartRunmode {
     
     if (!defined $pid) {
         die "cannot fork: $!";
-    } elseif ($pid == 0) {
+    } elsif ($pid == 0) {
         # child does this
         close STDOUT;
         close STDERR;
