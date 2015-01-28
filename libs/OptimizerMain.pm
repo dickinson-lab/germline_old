@@ -77,7 +77,7 @@ sub optimizer_status : Runmode {
         }
     }
 
-    open OUTPUT, ">", "$tmpdir" . '/results.txt';
+    open OUTPUT, ">", "$tmpdir" . 'results.txt';
     print OUTPUT "Printed by redirect.";
     print OUTPUT localtime;
     close OUTPUT;
@@ -87,7 +87,7 @@ sub optimizer_status : Runmode {
     $template->param(
                 TITLE  => "Optimizer Status",
                 STILL_RUNNING  => $still_running,
-                RESULT_FILE => "$tmpdir" . '/results.txt'
+                RESULT_FILE => "$tmpdir" . 'results.txt'
             );
     return $template->output;
 }
