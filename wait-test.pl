@@ -5,6 +5,7 @@ use warnings;
 use 5.010;
 use File::Pid;
 use File::Path qw(make_path);
+use CGI::Carp qw(fatalsToBrowser);
 
 # Set location for PID file
 my $id = shift;
