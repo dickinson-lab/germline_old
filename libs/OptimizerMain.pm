@@ -44,7 +44,7 @@ sub optimizer_status : Runmode {
     my $id = $self->session->id();
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-    my $pidloc = "$tmpdir" . '/' . "$id";
+    my $pidloc = "$tmpdir" . "$id";
     
     my $pidfile = File::Pid->new({
         file => "$pidloc/running.pid"
@@ -64,7 +64,7 @@ sub optimizer_status : Runmode {
     $template->param(
                 TITLE  => "Optimizer Status",
                 STILL_RUNNING  => $still_running,
-                RESULT_FILE => "$tmpdir/results.txt"
+                RESULT_FILE => "$tmpdir" . "results.txt"
             );
     return $template->output;
 }

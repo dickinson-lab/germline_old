@@ -10,7 +10,7 @@ use CGI::Carp qw(fatalsToBrowser);
 # Set location for PID file
 my $id = shift;
 my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
-my $pidloc = "$tmpdir" . '/' . "$id";
+my $pidloc = "$tmpdir" . "$id";
 make_path("$pidloc");
 
 my $pidfile = File::Pid->new({
