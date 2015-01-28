@@ -59,6 +59,7 @@ sub optimizer_status : Runmode {
     # Get ready to access PID file
     my $id = $self->session->id();
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
+    my $datadir = $ENV{OPENSHIFT_DATA_DIR};
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
     my $pidloc = "$tmpdir" . "$id";
     
@@ -76,7 +77,7 @@ sub optimizer_status : Runmode {
         }
     }
 
-    open OUTPUT, ">$tmpdir/results.txt";
+    open OUTPUT, ">$datadir/results.txt";
     print OUTPUT "Printed by redirect.";
     print OUTPUT localtime;
     close OUTPUT;
@@ -86,7 +87,7 @@ sub optimizer_status : Runmode {
     $template->param(
                 TITLE  => "Optimizer Status",
                 STILL_RUNNING  => $still_running,
-                RESULT_FILE => "$tmpdir" . "results.txt"
+                RESULT_FILE => "$datadir" . "results.txt"
             );
     return $template->output;
 }
