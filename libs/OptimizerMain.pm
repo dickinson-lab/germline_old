@@ -59,7 +59,7 @@ sub optimizer_status : Runmode {
         }
     }
 
-    my $template = HTML::Template -> new( filename => 'optimizer-results.html');
+    my $template = $self->load_tmpl('libs/optimizer-results.html');
     $template->param(
                 TITLE  => "Optimizer Status",
                 STILL_RUNNING  => $still_running
