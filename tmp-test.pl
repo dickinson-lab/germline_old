@@ -13,6 +13,7 @@ close OUTPUT;
 
 my $still_running = 1;
 
+my $appdir = $ENV{OPENSHIFT_REPO_DIR};
 my $template = $self->load_tmpl($appdir . '/optimizer-results.html');
 $template->param(
             TITLE  => "Optimizer Status",
