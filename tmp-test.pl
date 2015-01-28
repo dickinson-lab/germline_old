@@ -20,4 +20,4 @@ $template->param(
             STILL_RUNNING  => $still_running,
             RESULT_FILE => $tmpdir . 'results.txt'
         );
-return $template->output;
+print "Content-Type: text/html\n\n", $template->output;
