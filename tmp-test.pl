@@ -11,7 +11,7 @@ print OUTPUT "Hello World!";
 print OUTPUT localtime;
 close OUTPUT;
 
-my $still_running = 1;
+my $still_running = 0;
 
 my $appdir = $ENV{OPENSHIFT_REPO_DIR};
 my $template = HTML::Template->new( filename => $appdir . '/optimizer-results.html' );
