@@ -27,7 +27,8 @@ sub start_optimization : StartRunmode {
         open STDERR, ">&=1";
 
         my $id = $self->session->id();
-        my $cmd = '/wait_test.pl';
+        my $appdir = $ENV{OPENSHIFT_REPO_DIR};
+        my $cmd = $appdir . '/wait_test.pl';
         exec "$cmd", "$id";
         die "can't do exec: $!";
 
