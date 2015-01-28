@@ -19,7 +19,6 @@ sub start_optimization : StartRunmode {
     
     if (my $pid = fork) {
         # parent does this
-        die "I did this";
         return $self->redirect("/optimize-start.pl?rm=optimizer_status");
     } elsif (defined $pid) {
         # child does this
@@ -65,6 +64,7 @@ sub optimizer_status : Runmode {
     $template->param(
                 TITLE  => "Optimizer Status",
                 STILL_RUNNING  => $still_running
+                RESULT_FILE => "$tmpdir/results.txt"; 
             );
     return $template->output;
 }

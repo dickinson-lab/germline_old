@@ -18,7 +18,11 @@ my $pidfile = File::Pid->new({
 
 $pidfile -> write;
 
-sleep 60;
+sleep(60);
+
+open OUTPUT ">$tmpdir/results.txt";
+print OUTPUT localtime;
+close OUTPUT;
 
 $pidfile -> remove or warn "Couldn't unlink PID file\n";
 
