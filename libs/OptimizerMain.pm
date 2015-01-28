@@ -38,7 +38,7 @@ sub start_optimization : StartRunmode {
         });
         $pidfile -> write;
         sleep(60);
-        open OUTPUT ">$tmpdir/results.txt";
+        open OUTPUT, ">$tmpdir/results.txt";
         print OUTPUT localtime;
         close OUTPUT;
         $pidfile -> remove or warn "Couldn't unlink PID file\n";
