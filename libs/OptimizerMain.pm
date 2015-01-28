@@ -76,6 +76,12 @@ sub optimizer_status : Runmode {
         }
     }
 
+    open OUTPUT, ">$tmpdir/results.txt";
+    print OUTPUT "Printed by redirect.";
+    print OUTPUT localtime;
+    close OUTPUT;
+
+
     my $template = $self->load_tmpl($appdir . '/optimizer-results.html');
     $template->param(
                 TITLE  => "Optimizer Status",
