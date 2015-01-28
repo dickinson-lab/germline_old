@@ -17,10 +17,11 @@ use File::Pid;
 sub start_optimization : StartRunmode {
     my $self = shift;
     
-    if (my $pid = fork) {
-        # parent does this
-        return $self->redirect("/optimize-start.pl?rm=optimizer_status");
-    } elsif (defined $pid) {
+    my $pid = fork;
+    
+    if (!defined $pid) {
+        die "cannot fork: $!";
+    } elseif ($pid == 0) {
         # child does this
         close STDOUT;
         close STDERR;
@@ -31,9 +32,9 @@ sub start_optimization : StartRunmode {
         my $cmd = $appdir . '/wait_test.pl';
         exec "$cmd", "$id";
         die "can't do exec: $!";
-
     } else {
-        die "cannot fork: $!";
+        # parent does this
+        return $self->redirect("/optimize-start.pl?rm=optimizer_status");
     }
 
 }
