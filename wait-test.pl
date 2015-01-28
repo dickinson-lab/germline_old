@@ -7,8 +7,6 @@ use File::Pid;
 use File::Path qw(make_path);
 use CGI::Carp qw(fatalsToBrowser);
 
-die "The exec ran.";
-
 # Set location for PID file
 my $id = shift;
 my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
