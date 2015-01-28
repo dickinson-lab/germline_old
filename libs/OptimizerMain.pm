@@ -30,6 +30,7 @@ sub start_optimization : StartRunmode {
         my $id = $self->session->id();
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
         
+        my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
         my $pidloc = "$tmpdir" . "$id";
         make_path("$pidloc");
         my $pidfile = File::Pid->new({
