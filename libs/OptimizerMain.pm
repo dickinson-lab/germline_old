@@ -29,6 +29,19 @@ sub start_optimization : StartRunmode {
 
         my $id = $self->session->id();
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
+        
+        my $pidloc = "$tmpdir" . "$id";
+        make_path("$pidloc");
+        my $pidfile = File::Pid->new({
+            file => "$pidloc/running.pid"
+        });
+        $pidfile -> write;
+        sleep(60);
+        open OUTPUT ">$tmpdir/results.txt";
+        print OUTPUT localtime;
+        close OUTPUT;
+        $pidfile -> remove or warn "Couldn't unlink PID file\n";
+        
         my $cmd = "$appdir" . '/wait-test.pl';
         exec "$cmd", "$id" or die "can't do exec: $!";
     } else {
