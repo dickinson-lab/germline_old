@@ -19,6 +19,7 @@ sub start_optimization : StartRunmode {
     
     if (my $pid = fork) {
         # parent does this
+        die "I did this";
         return $self->redirect("/optimize-start.pl?rm=optimizer_status");
     } elsif (defined $pid) {
         # child does this
