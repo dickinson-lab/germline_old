@@ -11,6 +11,7 @@ print OUTPUT "Hello World!";
 print OUTPUT localtime;
 close OUTPUT;
 
+my $still_running = 1;
 
 my $template = $self->load_tmpl($appdir . '/optimizer-results.html');
 $template->param(
