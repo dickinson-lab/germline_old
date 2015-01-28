@@ -64,7 +64,7 @@ sub optimizer_status : Runmode {
     $template->param(
                 TITLE  => "Optimizer Status",
                 STILL_RUNNING  => $still_running
-                RESULT_FILE => "$tmpdir/results.txt"; 
+                RESULT_FILE => "$tmpdir/results.txt" 
             );
     return $template->output;
 }
