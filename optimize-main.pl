@@ -9,7 +9,7 @@ use CGI::Application::Plugin::Session;
 use HTML::Template;
 use File::Pid;
 
-sub start_optimization : StartRunmode {
+sub start_optimization : Runmode {
     my $self = shift;
     
     if (my $pid = fork) {
