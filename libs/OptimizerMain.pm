@@ -9,6 +9,7 @@ use 5.010;
 use base 'CGI::Application';
 use CGI::Application::Plugin::AutoRunmode;
 use CGI::Application::Plugin::Session;
+use CGI::Application::Plugin::Redirect;
 use HTML::Template;
 use File::Pid;
 
