@@ -27,7 +27,6 @@ sub start_optimization : StartRunmode {
         close STDERR;
         open STDERR, ">&=1";
 
-        die "The child ran.";
         my $id = $self->session->id();
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
         my $cmd = $appdir . '/wait-test.pl';
