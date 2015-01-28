@@ -29,7 +29,7 @@ sub start_optimization : StartRunmode {
 
         my $id = $self->session->id();
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-        my $cmd = $appdir . '/wait_test.pl';
+        my $cmd = $appdir . '/wait-test.pl';
         exec "$cmd", "$id";
         die "can't do exec: $!";
     } else {
