@@ -12,7 +12,7 @@ print OUTPUT localtime;
 close OUTPUT;
 
 my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-my $template = HTML::Template->new( filename => $appdir . '/tmp-test-tmpl.html' );
+my $template = HTML::Template->new( filename => $appdir . '/optimizer-results.html' );
 $template->param(
             TITLE  => "tmp Test",
             RESULT_FILE => $tmpdir . 'results.txt'
