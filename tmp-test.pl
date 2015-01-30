@@ -8,7 +8,7 @@ use CGI::Carp qw(fatalsToBrowser);
 
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 my $tmpdir = $datadir . 'tmp/';
-open OUTPUT, ">", $tmpdir . 'results.txt' or die "Can't create tmp file";
+open OUTPUT, ">", $datadir . 'results.txt' or die "Can't create tmp file";
 print OUTPUT "Hello World!\n";
 print OUTPUT localtime, "\n";
 close OUTPUT;
