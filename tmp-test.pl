@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use HTML::Template;
+use CGI::Carp qw(fatalsToBrowser);
 
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 my $tmpdir = $datadir . 'tmp/';
