@@ -6,7 +6,7 @@ use warnings;
 use HTML::Template;
 
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
-my $tmpdir = $datadir . '/tmp/';
+my $tmpdir = $datadir . 'tmp/';
 open OUTPUT, ">", $tmpdir . 'results.txt';
 print OUTPUT "Hello World!";
 print OUTPUT localtime;
