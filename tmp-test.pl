@@ -21,13 +21,14 @@ $template->param(
         );
 
 print "Content-Type: text/html\n\n";
-print "<p1>Temp location is $tmpdir\n";
-print "App location is $appdir\n";
+print "<p1>Temp location is $tmpdir</p1>";
+print "<p1>App location is $appdir</p1>";
+print "<p1>Looking for file at " . $tmpdir . 'results.txt' . "</p1>";
 open TXTFILE, "<", $tmpdir . 'results.txt' or die "Can't find file";
 while (my $a = <TEXTFILE>) {
-    print "$a\n";
+    print "<p1>$a</p1>";
 }
-print "<p1>", $template->output;
+print $template->output;
 
  #Contents of tmp-test-tmpl.html:
  #
