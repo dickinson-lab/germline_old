@@ -8,8 +8,8 @@ use HTML::Template;
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 my $tmpdir = $datadir . 'tmp/';
 open OUTPUT, ">", $tmpdir . 'results.txt';
-print OUTPUT "Hello World!";
-print OUTPUT localtime;
+print OUTPUT "Hello World!\n";
+print OUTPUT localtime, "\n";
 close OUTPUT;
 
 my $appdir = $ENV{OPENSHIFT_REPO_DIR};
@@ -22,7 +22,7 @@ $template->param(
 print "Content-Type: text/html\n\n";
 print "<p1>Temp location is $tmpdir\n";
 print "App location is $appdir\n";
-open TXTFILE, "<", $tmpdir . 'results.txt';
+open TXTFILE, "<", $tmpdir . 'results.txt' or die "Can't find file";
 while (my $a = <TEXTFILE>) {
     print "$a\n";
 }
