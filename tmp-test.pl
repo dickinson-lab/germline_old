@@ -11,13 +11,29 @@ print OUTPUT "Hello World!";
 print OUTPUT localtime;
 close OUTPUT;
 
-my $still_running = 0;
-
 my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-my $template = HTML::Template->new( filename => $appdir . '/optimizer-results.html' );
+my $template = HTML::Template->new( filename => $appdir . '/tmp-test-tmpl.html' );
 $template->param(
-            TITLE  => "Optimizer Status",
-            STILL_RUNNING  => $still_running,
+            TITLE  => "tmp Test",
             RESULT_FILE => $tmpdir . 'results.txt'
         );
+
+say "Temp location is $tmpdir";
+say "App location is $appdir";
+open TXTFILE, "<", $tmpdir . 'results.txt';
+while (my $a = <TEXTFILE>) {
+    say "$a";
+}
 print "Content-Type: text/html\n\n", $template->output;
+
+ #Contents of tmp-test-tmpl.html:
+ #
+ #   <head>
+ #       <title> <TMPL_VAR NAME=TITLE> </title>
+ #   </head>
+ #   
+ #   <body>
+ #       <h3> Job Complete! </h3>
+ #       <iframe src=<TMPL_VAR NAME=RESULT_FILE> >
+ #       </iframe>
+ #   </body>
