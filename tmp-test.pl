@@ -18,13 +18,14 @@ $template->param(
             RESULT_FILE => $tmpdir . 'results.txt'
         );
 
-say "Temp location is $tmpdir";
-say "App location is $appdir";
+print "Content-Type: text/html\n\n";
+print "<p1>Temp location is $tmpdir\n";
+print "App location is $appdir\n";
 open TXTFILE, "<", $tmpdir . 'results.txt';
 while (my $a = <TEXTFILE>) {
-    say "$a";
+    print "$a\n";
 }
-print "Content-Type: text/html\n\n", $template->output;
+print "<p1>", $template->output;
 
  #Contents of tmp-test-tmpl.html:
  #
