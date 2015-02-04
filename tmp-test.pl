@@ -7,7 +7,7 @@ use HTML::Template;
 use CGI::Carp qw(fatalsToBrowser);
 
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
-my $tmpdir = $datadir . 'tmp/';
+my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
 open OUTPUT, ">", $tmpdir . 'results.txt' or die "Can't create tmp file";
 print OUTPUT "Hello World!\n";
 print OUTPUT localtime, "\n";
