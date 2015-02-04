@@ -29,6 +29,10 @@ while (my $a = <TXTFILE>) {
     print "<p1>Read 1 line\n</p1>";
     print "<p1>$a \n</p1>";
 }
+close TXTFILE;
+unlink ( $tmpdir . 'results.txt' ) or die "Couldn't delete temp file";
+open TXTFILE, "<", $tmpdir . 'results.txt' or die "Tmp file successfully deleted";
+
 print $template->output;
 
  #Contents of tmp-test-tmpl.html:
