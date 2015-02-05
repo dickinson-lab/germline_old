@@ -12,7 +12,7 @@ use CGI::Application::Plugin::Session;
 use CGI::Application::Plugin::Redirect;
 use HTML::Template;
 use File::Pid;
-
+use CGI::Carp qw(fatalsToBrowser);
 
 sub start_optimization : StartRunmode {
     my $self = shift;
@@ -64,12 +64,12 @@ sub optimizer_status : Runmode {
     my $pidloc = "$tmpdir" . "$id";
     
     my $pidfile = File::Pid->new({
-        file => "$pidloc/running.pid"
+        file => $pidloc . "running.pid"
     });
     
     # Check if process is still running
     my $still_running = 0;
-    if ( -e "$pidloc/running.pid" ) {
+    if ( -e $pidloc . "running.pid" ) {
         if ( $pidfile -> running ) {
             $still_running = 1;
         } else {
@@ -83,7 +83,7 @@ sub optimizer_status : Runmode {
     close OUTPUT;
 
 
-    my $template = $self->load_tmpl($appdir . '/optimizer-results.html');
+    my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
     $template->param(
                 TITLE  => "Optimizer Status",
                 STILL_RUNNING  => $still_running,
