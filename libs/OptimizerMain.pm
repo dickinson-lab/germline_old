@@ -31,21 +31,21 @@ sub start_optimization : StartRunmode {
         my $id = $self->session->id();
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
         
-        my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
-        my $pidloc = "$tmpdir" . "$id";
-        make_path("$pidloc");
-        my $pidfile = File::Pid->new({
-            file => ($pidloc . '_running.pid')
-        });
-        $pidfile -> write;
-        sleep 10;
-        open OUTPUT, ">>$tmpdir/results.txt";
-        print OUTPUT localtime;
-        close OUTPUT;
-        $pidfile -> remove or warn "Couldn't unlink PID file\n";
+        #my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
+        #my $pidloc = "$tmpdir" . "$id";
+        #make_path("$pidloc");
+        #my $pidfile = File::Pid->new({
+        #    file => ($pidloc . '_running.pid')
+        #});
+        #$pidfile -> write;
+        #sleep 10;
+        #open OUTPUT, ">>$tmpdir/results.txt";
+        #print OUTPUT localtime;
+        #close OUTPUT;
+        #$pidfile -> remove or warn "Couldn't unlink PID file\n";
         
-        #my $cmd = "$appdir" . '/wait-test.pl';
-        #exec "$cmd", "$id" or die "can't do exec: $!";
+        my $cmd = "$appdir" . 'wait-test.pl';
+        exec "$cmd", "$id" or die "can't do exec: $!";
     } else {
         # parent does this
         return $self->redirect("/optimize-start.pl?rm=optimizer_status");

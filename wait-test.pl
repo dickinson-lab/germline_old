@@ -14,12 +14,12 @@ my $pidloc = "$tmpdir" . "$id";
 make_path("$pidloc");
 
 my $pidfile = File::Pid->new({
-    file => $pidloc . "running.pid"
+    file => $pidloc . '_running.pid'
 });
 
 $pidfile -> write;
 
-#sleep(60);
+sleep 10;
 
 open OUTPUT, ">", $tmpdir . 'results.txt' or die "Can't create tmp file";
 print OUTPUT "Hello World!";
