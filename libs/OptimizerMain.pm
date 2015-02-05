@@ -64,7 +64,7 @@ sub optimizer_status : Runmode {
     my $pidloc = "$tmpdir" . "$id";
     
     my $pidfile = File::Pid->new({
-        file => $pidloc . "running.pid"
+        file => $pidloc . '_running.pid'
     });
     
     # Check if process is still running
