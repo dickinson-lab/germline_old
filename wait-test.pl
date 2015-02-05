@@ -19,7 +19,7 @@ my $pidfile = File::Pid->new({
 
 $pidfile -> write;
 
-sleep(60);
+#sleep(60);
 
 open OUTPUT, ">", $tmpdir . 'results.txt' or die "Can't create tmp file";
 print OUTPUT "Hello World!";

@@ -12,6 +12,7 @@ use CGI::Application::Plugin::Session;
 use CGI::Application::Plugin::Redirect;
 use HTML::Template;
 use File::Pid;
+use File::Path qw(make_path);
 use CGI::Carp qw(fatalsToBrowser);
 
 sub start_optimization : StartRunmode {
@@ -34,7 +35,7 @@ sub start_optimization : StartRunmode {
         my $pidloc = "$tmpdir" . "$id";
         make_path("$pidloc");
         my $pidfile = File::Pid->new({
-            file => "$pidloc/running.pid"
+            file => ($pidloc . "running.pid")
         });
         $pidfile -> write;
         die "Didn't wait.";
