@@ -78,12 +78,19 @@ sub optimizer_status : Runmode {
     }
 
     open OUTPUT, ">", "$tmpdir" . 'results.txt';
-    print OUTPUT "Printed by redirect.";
+    print OUTPUT "Printed by redirect:\n";
     print OUTPUT localtime;
     close OUTPUT;
 
-    open TXTFILE, "<", $tmpdir . 'results.txt' or die "Can't find tmp file";
     my $results = '';
+
+    if ($still_running) {
+        $results .= "Child process is active.\n"
+    } else {
+        $results .= "Child process is finished.\n"
+    }
+
+    open TXTFILE, "<", $tmpdir . 'results.txt' or die "Can't find tmp file";
     while (my $a = <TXTFILE>) {
         $results .= "<p1>$a \n</p1>";
     }
