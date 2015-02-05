@@ -67,7 +67,7 @@ sub optimizer_status : Runmode {
         file => $pidloc . '_running.pid'
     });
     
-    sleep 20;
+    #sleep 20;
     
     # Check if process is still running
     my $still_running = 0;
