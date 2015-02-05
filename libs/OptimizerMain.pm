@@ -85,7 +85,7 @@ sub optimizer_status : Runmode {
     open TXTFILE, "<", $tmpdir . 'results.txt' or die "Can't find tmp file";
     my $results = '';
     while (my $a = <TXTFILE>) {
-        results .= "<p1>$a \n</p1>";
+        $results .= "<p1>$a \n</p1>";
     }
     close TXTFILE;
     unlink ( $tmpdir . 'results.txt' ) or die "Couldn't delete temp file";
