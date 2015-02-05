@@ -10,9 +10,8 @@ use base 'CGI::Application';
 use CGI::Application::Plugin::AutoRunmode;
 use CGI::Application::Plugin::Session;
 use CGI::Application::Plugin::Redirect;
-use HTML::Template;
 use File::Pid;
-use File::Path qw(make_path);
+#use File::Path qw(make_path);
 use CGI::Carp qw(fatalsToBrowser);
 
 sub start_optimization : StartRunmode {
@@ -28,24 +27,26 @@ sub start_optimization : StartRunmode {
         close STDERR;
         open STDERR, ">&=1";
 
+        # Generate a PID file to allow progress monitoring
         my $id = $self->session->id();
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-        
-        #my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
-        #my $pidloc = "$tmpdir" . "$id";
+        my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
+        my $pidloc = "$tmpdir" . "$id";
         #make_path("$pidloc");
-        #my $pidfile = File::Pid->new({
-        #    file => ($pidloc . '_running.pid')
-        #});
-        #$pidfile -> write;
-        #sleep 10;
-        #open OUTPUT, ">>$tmpdir/results.txt";
-        #print OUTPUT localtime;
-        #close OUTPUT;
-        #$pidfile -> remove or warn "Couldn't unlink PID file\n";
+        my $pidfile = File::Pid->new({
+            file => ($pidloc . '_running.pid')
+        });
+        $pidfile -> write;
         
-        my $cmd = "$appdir" . 'wait-test.pl';
-        exec "$cmd", "$id" or die "can't do exec: $!";
+        
+        sleep 10;
+        open OUTPUT, ">>$tmpdir/results.txt";
+        print OUTPUT localtime;
+        close OUTPUT;
+        
+        # Remove PID file to signal process completion
+        $pidfile -> remove or warn "Couldn't unlink PID file\n";
+        
     } else {
         # parent does this
         return $self->redirect("/optimize-start.pl?rm=optimizer_status");
