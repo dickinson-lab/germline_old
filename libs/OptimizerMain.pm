@@ -82,14 +82,23 @@ sub optimizer_status : Runmode {
     print OUTPUT localtime;
     close OUTPUT;
 
+    open TXTFILE, "<", $tmpdir . 'results.txt' or die "Can't find tmp file";
+    my $results = '';
+    while (my $a = <TXTFILE>) {
+        results .= "<p1>$a \n</p1>";
+    }
+    close TXTFILE;
+    unlink ( $tmpdir . 'results.txt' ) or die "Couldn't delete temp file";
+    
+    return $results;
 
-    my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
-    $template->param(
-                TITLE  => "Optimizer Status",
-                STILL_RUNNING  => $still_running,
-                RESULT_FILE => "$tmpdir" . 'results.txt'
-            );
-    return $template->output;
+    #my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
+    #$template->param(
+    #            TITLE  => "Optimizer Status",
+    #            STILL_RUNNING  => $still_running,
+    #            RESULT_FILE => "$tmpdir" . 'results.txt'
+    #        );
+    #return $template->output;
 }
 
 1;
