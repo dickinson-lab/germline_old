@@ -38,7 +38,7 @@ sub start_optimization : StartRunmode {
             file => ($pidloc . '_running.pid')
         });
         $pidfile -> write;
-        sleep 60;
+        sleep 10;
         open OUTPUT, ">>$tmpdir/results.txt";
         print OUTPUT localtime;
         close OUTPUT;
@@ -66,6 +66,8 @@ sub optimizer_status : Runmode {
     my $pidfile = File::Pid->new({
         file => $pidloc . '_running.pid'
     });
+    
+    sleep 20;
     
     # Check if process is still running
     my $still_running = 0;
