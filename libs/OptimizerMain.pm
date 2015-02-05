@@ -35,7 +35,7 @@ sub start_optimization : StartRunmode {
         my $pidloc = "$tmpdir" . "$id";
         make_path("$pidloc");
         my $pidfile = File::Pid->new({
-            file => ($pidloc . "_running.pid")
+            file => ($pidloc . '_running.pid')
         });
         $pidfile -> write;
         sleep 60;
@@ -69,7 +69,7 @@ sub optimizer_status : Runmode {
     
     # Check if process is still running
     my $still_running = 0;
-    if ( -e $pidloc . "_running.pid" ) {
+    if ( -e $pidloc . '_running.pid' ) {
         if ( $pidfile -> running ) {
             $still_running = 1;
         } else {
