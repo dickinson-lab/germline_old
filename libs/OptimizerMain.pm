@@ -35,18 +35,17 @@ sub start_optimization : StartRunmode {
         my $pidloc = "$tmpdir" . "$id";
         make_path("$pidloc");
         my $pidfile = File::Pid->new({
-            file => ($pidloc . "running.pid")
+            file => ($pidloc . "_running.pid")
         });
         $pidfile -> write;
-        die "Didn't wait.";
-        sleep 60;
-        open OUTPUT, ">$tmpdir/results.txt";
+        sleep 10;
+        open OUTPUT, ">>$tmpdir/results.txt";
         print OUTPUT localtime;
         close OUTPUT;
         $pidfile -> remove or warn "Couldn't unlink PID file\n";
         
-        my $cmd = "$appdir" . '/wait-test.pl';
-        exec "$cmd", "$id" or die "can't do exec: $!";
+        #my $cmd = "$appdir" . '/wait-test.pl';
+        #exec "$cmd", "$id" or die "can't do exec: $!";
     } else {
         # parent does this
         return $self->redirect("/optimize-start.pl?rm=optimizer_status");
@@ -70,7 +69,7 @@ sub optimizer_status : Runmode {
     
     # Check if process is still running
     my $still_running = 0;
-    if ( -e $pidloc . "running.pid" ) {
+    if ( -e $pidloc . "_running.pid" ) {
         if ( $pidfile -> running ) {
             $still_running = 1;
         } else {
@@ -78,7 +77,7 @@ sub optimizer_status : Runmode {
         }
     }
 
-    open OUTPUT, ">", "$tmpdir" . 'results.txt';
+    open OUTPUT, ">>", "$tmpdir" . 'results.txt';
     print OUTPUT "Printed by redirect:\n";
     print OUTPUT localtime;
     close OUTPUT;
