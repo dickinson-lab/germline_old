@@ -38,7 +38,7 @@ sub start_optimization : StartRunmode {
             file => ($pidloc . "_running.pid")
         });
         $pidfile -> write;
-        sleep 10;
+        sleep 60;
         open OUTPUT, ">>$tmpdir/results.txt";
         print OUTPUT localtime;
         close OUTPUT;
