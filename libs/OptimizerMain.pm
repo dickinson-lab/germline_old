@@ -193,10 +193,10 @@ sub optimizer_results : Runmode {
     my $id = $self->session->id();
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $pidloc = "$tmpdir" . "$id";
-    open RESULTS, "<", $pidloc . '_results.dat' or die "Can't open results file";
+    open RESULTS, "<", $pidloc . '_results.dat' or die "Program error: Couldn't open results file";
     my $JSONresults = <RESULTS>;
     close RESULTS;
-    my $results = decode_json($JSONresults); #$results now contains a reference to a hash containing the results
+    my $results = decode_json($JSONresults) or die "Decoding failed"; #$results now contains a reference to a hash containing the results
     
     #Temporary code
     my $data = "Content-Type: text/html\n\n";
