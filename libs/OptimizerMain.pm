@@ -94,7 +94,7 @@ sub start_optimization : StartRunmode {
         
         # If everything's ok, go ahead
         my $results = {}; #Get a pointer to an empty array that will hold the results
-        if $error {
+        if ($error) {
             $results->{'error'} = $error;
         } else {
         
