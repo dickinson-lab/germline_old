@@ -193,7 +193,7 @@ sub optimizer_results : Runmode {
     my $id = $self->session->id();
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $pidloc = "$tmpdir" . "$id";
-    open RESULTS "<" $pidloc . '_results.dat';
+    open RESULTS, "<" $pidloc . '_results.dat';
     my $JSONresults = <RESULTS>;
     close RESULTS;
     my $results = decode_json($JSONresults); #$results now contains a reference to a hash containing the results
