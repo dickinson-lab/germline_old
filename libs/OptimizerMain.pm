@@ -202,6 +202,7 @@ sub optimizer_results : Runmode {
     my $data = "Content-Type: text/html\n\n";
     $data .= $JSONresults . "\n";
     $data .= "href = $results \n";
+    $data .= %$results . "\n";
     $data .= $q->param('name') . "\n";
     $data .= $q->param('seq_type') . "\n";
     $data .= $results->{'Sequence_score'} . "\n";
