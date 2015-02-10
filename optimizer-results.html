@@ -1,22 +1,20 @@
-<TMPL_IF STILL_RUNNING>
-    <head>
-        <title> <TMPL_VAR NAME=TITLE> </title>
-        <meta http-equiv=refresh content=5>
-    </head>
-    
-    <body>
-        <p> Waiting for results... </p>
-    </body>
-    
-<TMPL_ELSE>
-    <head>
-        <title>C. elegans Germline Optimizer</title>
-    </head>
-    
-    <body>
-        <h3> Job Complete! </h3>
-        <iframe src=<TMPL_VAR NAME=RESULT_FILE> >
-        </iframe>
-    </body>
-    
-</TMPL_IF>
+<head>
+    <title> <TMPL_VAR NAME="TITLE"> </title>
+</head>
+
+<body>
+    <h2> Optimization Results </h2>
+    <TMPL_IF NAME="DNA_INPUT">
+        <h3> Input Sequence Score = <TMPL_VAR NAME="INPUT_SEQ_SCORE"> </h3>
+        <h3> Input Lowest Word Score = <TMPL_VAR NAME="INPUT_LOWEST_SCORE"> ( <TMPL_VAR NAME="INPUT_N_W_LOWEST_SCORE"> words) </h3>
+    </TMPL_IF>
+    <h3> Optimized Sequence Score = <TMPL_VAR NAME="RESULT_SEQ_SCORE"> </h3>
+    <h3> Optimized Sequence Lowest Word Score = <TMPL_VAR NAME="RESULT_LOWEST_SCORE" ( <TMPL_VAR NAME="RESULT_N_W_LOWEST_SCORE"> words) </h3>
+    <h3> Optimized Sequence: </h3>
+    <TMPL_IF NAME="INTRONS">
+        <p> <TMPL_VAR NAME="OPT_SEQ"> </p>
+    <TMPL_ELSE>
+        <p> <TMPL_VAR NAME="OPT_SEQ_INTRONS"> </p>
+    </TMPL_IF>
+        
+</body>
