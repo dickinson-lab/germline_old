@@ -19,9 +19,9 @@
     <h3> Optimized Sequence Lowest Word Score = <TMPL_VAR NAME="RESULT_LOWEST_SCORE"> ( <TMPL_VAR NAME="RESULT_N_W_LOWEST_SCORE"> words) </h3>
     <h3> Optimized Sequence: </h3>
     <TMPL_IF NAME="INTRONS">
-        <p> <TMPL_VAR NAME="OPT_SEQ"> </p>
-    <TMPL_ELSE>
         <p> <TMPL_VAR NAME="OPT_SEQ_INTRONS"> </p>
+    <TMPL_ELSE>
+        <p> <TMPL_VAR NAME="OPT_SEQ"> </p>
     </TMPL_IF>
         
 </body>
