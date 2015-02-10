@@ -203,11 +203,10 @@ sub optimizer_results : Runmode {
     my $data = "Content-Type: text/html\n\n";
     $data .= $JSONresults . "\n";
     $data .= "href = $href \n";
-    $data .= %results . "\n";
     $data .= $q->param('name') . "\n";
     $data .= $q->param('seq_type') . "\n";
-    $data .= $results{'Sequence_score'} . "\n";
-    $data .= $results{'Sequence'} . "\n"; 
+    $data .= $results{Sequence_score} . "\n";
+    $data .= $results{Sequence} . "\n"; 
     return $data;
     
     #Generate HTML page with results
