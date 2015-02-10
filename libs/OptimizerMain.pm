@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# To do next: Move error checking to parent so it gets done before redirect.
+# Add more checks to validate user input.
+
 package OptimizerMain;
 
 use strict;
@@ -19,7 +22,6 @@ use JSON;
 use lib '/libs/';
 use Seqscore;
 use OptimizerTools;
-use Data::Dumper;
 
 sub start_optimization : StartRunmode {
     my $self = shift;
