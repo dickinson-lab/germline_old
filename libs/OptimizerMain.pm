@@ -89,7 +89,7 @@ sub start_optimization : StartRunmode {
             my $trans = $seqobj->translate();
             $AAseq = $trans->seq();
         } else {
-            $error .= "Program error :-\(\n"); #You'd only get this if the HTML form returned the wrong value.
+            $error .= "Program error :-\(\n"; #You'd only get this if the HTML form returned the wrong value.
         }
         
         # If everything's ok, go ahead
