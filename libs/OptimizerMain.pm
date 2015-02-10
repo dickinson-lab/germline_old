@@ -115,7 +115,7 @@ sub start_optimization : StartRunmode {
             ### Optimize the sequence ###
             
             my $optimization_results = OptimizerTools::optimize($sequence_lib, $AAseq);
-            $results = {$results, $optimization_results};
+            $results = {%$results, %$optimization_results};
             
             ### Optionally add introns ###
             
@@ -203,8 +203,8 @@ sub optimizer_results : Runmode {
     #Temporary code
     my $data = "Content-Type: text/html\n\n";
     #$data .= $JSONresults . "\n";
-    $data .= Dumper($href);
-    $data .= Dumper(%results);
+    $data .= "Hash Ref:" . Dumper($href);
+    $data .= "Hash:" . Dumper(%results);
     $data .= $q->param('name') . "\n";
     $data .= $q->param('seq_type') . "\n";
     $data .= $results{Sequence_score} . "\n";
