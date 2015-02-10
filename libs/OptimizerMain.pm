@@ -84,7 +84,7 @@ sub start_optimization : StartRunmode {
         } elsif ($seqtype eq 'DNA') {
             
             if ( $seqobj->alphabet ne 'dna') {
-                $error .= "You selected \"DNA,\" but your input doesn't appear to be a nucleotide sequence. Please check the sequence and try again.\n");
+                $error .= "You selected \"DNA,\" but your input doesn't appear to be a nucleotide sequence. Please check the sequence and try again.\n";
             }
             my $trans = $seqobj->translate();
             $AAseq = $trans->seq();
