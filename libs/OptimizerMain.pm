@@ -211,22 +211,22 @@ sub optimizer_results : Runmode {
     return $data;
     
     #Generate HTML page with results
-    my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-    my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
-    $template->param(
-            TITLE => ("Results for optimization of sequence " . $q->param('name')),
-            DNA_INPUT => ($q->param('seq_type') eq 'DNA'),
-            INPUT_SEQ_SCORE => $results->{'input_sequence_score'},
-            INPUT_LOWEST_SCORE => $results->{'input_lowest_score'},
-            INPUT_N_W_LOWEST_SCORE => $results->{'input_n_w_lowest_score'},
-            RESULT_SEQ_SCORE => $results->{'Sequence_score'},
-            RESULT_LOWEST_SCORE => $results->{'Lowest_score'},
-            RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
-            INTRONS => ($q->param('introns')),
-            OPT_SEQ => $results->{'Sequence'},
-            OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
-    );
-    return $template->output;
+    #my $appdir = $ENV{OPENSHIFT_REPO_DIR};
+    #my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
+    #$template->param(
+    #        TITLE => ("Results for optimization of sequence " . $q->param('name')),
+    #        DNA_INPUT => ($q->param('seq_type') eq 'DNA'),
+    #        INPUT_SEQ_SCORE => $results->{'input_sequence_score'},
+    #        INPUT_LOWEST_SCORE => $results->{'input_lowest_score'},
+    #        INPUT_N_W_LOWEST_SCORE => $results->{'input_n_w_lowest_score'},
+    #        RESULT_SEQ_SCORE => $results->{'Sequence_score'},
+    #        RESULT_LOWEST_SCORE => $results->{'Lowest_score'},
+    #        RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
+    #        INTRONS => ($q->param('introns')),
+    #        OPT_SEQ => $results->{'Sequence'},
+    #        OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
+    #);
+    #return $template->output;
 }
 
 1;
