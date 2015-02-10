@@ -19,6 +19,7 @@ use JSON;
 use lib '/libs/';
 use Seqscore;
 use OptimizerTools;
+use Data::Dumper;
 
 sub start_optimization : StartRunmode {
     my $self = shift;
@@ -203,6 +204,7 @@ sub optimizer_results : Runmode {
     my $data = "Content-Type: text/html\n\n";
     $data .= $JSONresults . "\n";
     $data .= "href = $href \n";
+    $data .= Dumper(%results);
     $data .= $q->param('name') . "\n";
     $data .= $q->param('seq_type') . "\n";
     $data .= $results{Sequence_score} . "\n";
