@@ -208,11 +208,11 @@ sub optimizer_results : Runmode {
             INPUT_LOWEST_SCORE => $results->{'input_lowest_score'},
             INPUT_N_W_LOWEST_SCORE => $results->{'input_n_w_lowest_score'},
             RESULT_SEQ_SCORE => $results->{'Sequence_score'},
-            #RESULT_LOWEST_SCORE => $results->{'Lowest_score'},
-            #RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
-            #INTRONS => $q->param('introns'),
-            #OPT_SEQ => $results->{'Sequence'},
-            #OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
+            RESULT_LOWEST_SCORE => $results->{'Lowest_score'},
+            RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
+            INTRONS => $q->param('introns'),
+            OPT_SEQ => $results->{'Sequence'},
+            OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
     );
     return $template->output;
 }
