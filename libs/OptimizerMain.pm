@@ -193,13 +193,14 @@ sub optimizer_results : Runmode {
     my $id = $self->session->id();
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $pidloc = "$tmpdir" . "$id";
-    open RESULTS, "<", $pidloc . '_results.dat';
+    open RESULTS, "<", $pidloc . '_results.dat' or die "Can't open results file";
     my $JSONresults = <RESULTS>;
     close RESULTS;
     my $results = decode_json($JSONresults); #$results now contains a reference to a hash containing the results
     
     #Temporary code
     my $data = "Content-Type: text/html\n\n";
+    $data .= $JSONresults . "\n";
     $data .= $q->param('name') . "\n";
     $data .= $q->param('seq_type') . "\n";
     $data .= $results->{'Sequence_score'} . "\n";
