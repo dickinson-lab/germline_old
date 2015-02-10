@@ -202,8 +202,8 @@ sub optimizer_results : Runmode {
     
     #Temporary code
     my $data = "Content-Type: text/html\n\n";
-    $data .= $JSONresults . "\n";
-    $data .= "href = $href \n";
+    #$data .= $JSONresults . "\n";
+    $data .= Dumper($href);
     $data .= Dumper(%results);
     $data .= $q->param('name') . "\n";
     $data .= $q->param('seq_type') . "\n";
