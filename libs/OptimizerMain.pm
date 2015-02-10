@@ -130,6 +130,11 @@ sub start_optimization : StartRunmode {
         
         ### PRODUCE AN OUTPUT FILE TO BE READ BY THE PARENT ###
         
+        # Save query parameters
+        $results->{'name'} = $q->param('name');
+        $results->{'seqtype'} = $seqtype;
+        $results->{'introns'} = $add_introns;
+        
         # Encode the file with JSON
         my $JSONresults = encode_json($results);        
         open OUTPUT, ">", $pidloc . '_results.dat';
@@ -188,7 +193,6 @@ sub optimizer_status : Runmode {
 
 sub optimizer_results : Runmode {
     my $self = shift;
-    my $q = $self->query();
     
     # Load result file
     my $id = $self->session->id();
@@ -199,31 +203,19 @@ sub optimizer_results : Runmode {
     close RESULTS;
     my $results = decode_json($JSONresults);  # $results now contains a pointer to the results of optimization
     
-    
-    ##Temporary code
-    #my $data = "Content-Type: text/html\n\n";
-    ##$data .= $JSONresults . "\n";
-    #$data .= "Hash Ref:" . Dumper($href);
-    #$data .= "Hash:" . Dumper(%results);
-    #$data .= $q->param('name') . "\n";
-    #$data .= $q->param('seq_type') . "\n";
-    #$data .= $results{Sequence_score} . "\n";
-    #$data .= $results{Sequence} . "\n"; 
-    #return $data;
-    
     #Generate HTML page with results
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
     my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
     $template->param(
-            TITLE => ("Results for optimization of sequence " . $q->param('name')),
-            DNA_INPUT => ($q->param('seq_type') eq 'DNA'),
+            TITLE => ('Results for optimization of sequence "' . $results->{'name'} . '"'),
+            DNA_INPUT => ($results->{'seqtype'} eq 'DNA'),
             INPUT_SEQ_SCORE => $results->{'input_sequence_score'},
             INPUT_LOWEST_SCORE => $results->{'input_lowest_score'},
             INPUT_N_W_LOWEST_SCORE => $results->{'input_n_w_lowest_score'},
             RESULT_SEQ_SCORE => $results->{'Sequence_score'},
             RESULT_LOWEST_SCORE => $results->{'Lowest_score'},
             RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
-            #INTRONS => ($q->param('introns')),
+            INTRONS => $results->{'introns'},
             OPT_SEQ => $results->{'Sequence'},
             OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
     );
