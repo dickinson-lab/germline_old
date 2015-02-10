@@ -212,7 +212,7 @@ sub optimizer_results : Runmode {
             #RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
             #INTRONS => $q->param('introns'),
             #OPT_SEQ => $results->{'Sequence'},
-            #OPT_SEQ_INTRONS => $results->{'optseq_w_introns'}
+            #OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
     );
     return $template->output;
 }
