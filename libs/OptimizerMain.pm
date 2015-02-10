@@ -198,6 +198,14 @@ sub optimizer_results : Runmode {
     close RESULTS;
     my $results = decode_json($JSONresults); #$results now contains a reference to a hash containing the results
     
+    #Temporary code
+    my $data = "Content-Type: text/html\n\n";
+    $data .= $q->param('name') . "\n";
+    $data .= $q->param('seq_type') . "\n";
+    $data .= $results->{'Sequence_score'} . "\n";
+    $data .= $results->{'Sequence'} . "\n"; 
+    return $data;
+    
     #Generate HTML page with results
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
     my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
@@ -210,9 +218,9 @@ sub optimizer_results : Runmode {
             RESULT_SEQ_SCORE => $results->{'Sequence_score'},
             RESULT_LOWEST_SCORE => $results->{'Lowest_score'},
             RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
-            #INTRONS => ($q->param('introns')),
-            #OPT_SEQ => $results->{'Sequence'},
-            #OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
+            INTRONS => ($q->param('introns')),
+            OPT_SEQ => $results->{'Sequence'},
+            OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
     );
     return $template->output;
 }
