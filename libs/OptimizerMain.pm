@@ -202,7 +202,7 @@ sub optimizer_results : Runmode {
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
     my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
     $template->param(
-            TITLE => ("Results for optimization of sequence " . $q->param('name')),
+            #TITLE => ("Results for optimization of sequence " . $q->param('name')),
             DNA_INPUT => ($q->param('seq_type') eq 'DNA'),
             INPUT_SEQ_SCORE => $results->{'input_sequence_score'},
             INPUT_LOWEST_SCORE => $results->{'input_lowest_score'},
