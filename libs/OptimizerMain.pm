@@ -122,7 +122,7 @@ sub start_optimization : StartRunmode {
             if ($add_introns) {
                 $results->{'optseq_w_introns'} = OptimizerTools::addintrons( $optimization_results->{'Sequence'} );
             } else {
-                $results->{'optseq_w_introns'} = '':
+                $results->{'optseq_w_introns'} = '';
             }
         
         }
