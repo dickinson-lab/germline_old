@@ -160,6 +160,9 @@ sub start_optimization : StartRunmode {
 sub optimizer_status : Runmode {
     my $self = shift;
 
+    # Wait to make sure PID file has time to get created
+    sleep 1;
+
     # Get ready to access PID file
     my $id = $self->session->id();
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
