@@ -149,6 +149,7 @@ sub start_optimization : StartRunmode {
         
     } else {
         # parent does this
+        sleep 1; #Wait to make sure child has time to create PID file
         return $self->redirect("/optimize-start.pl?rm=optimizer_status");
     }
 
@@ -159,9 +160,6 @@ sub start_optimization : StartRunmode {
 
 sub optimizer_status : Runmode {
     my $self = shift;
-
-    # Wait to make sure PID file has time to get created
-    sleep 1;
 
     # Get ready to access PID file
     my $id = $self->session->id();
