@@ -30,7 +30,7 @@ sub start_optimization : StartRunmode {
     #Get a unique id that parent and child will share
     my $guid = Data::GUID->new;
     my $id = $guid->as_hex;
-    $self->param('id', $id);
+    $self->param('id' => $id);
     
     my $pid = fork;
     
