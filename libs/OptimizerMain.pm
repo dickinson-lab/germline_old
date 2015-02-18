@@ -200,7 +200,7 @@ sub optimizer_status : Runmode {
         );
         return $template->output;
     } else {
-        return $self->redirect("/optimize-start.pl?rm=optimizer_results");
+        return $self->redirect('/optimize-start.pl?rm=optimizer_results&id=' . $id);
     }
 }
 
