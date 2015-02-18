@@ -173,6 +173,7 @@ sub optimizer_status : Runmode {
     
     # Get ready to access PID file
     my $id = $self->param('id');
+    die "$id";
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $datadir = $ENV{OPENSHIFT_DATA_DIR};
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
