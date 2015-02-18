@@ -19,12 +19,18 @@ use BerkeleyDB;
 use Bio::Seq;
 use Math::Random;
 use JSON;
+use Data::GUID;
 use lib '/libs/';
 use Seqscore;
 use OptimizerTools;
 
 sub start_optimization : StartRunmode {
     my $self = shift;
+    
+    #Get a unique id that parent and child will share
+    my $guid = Data::GUID->new;
+    my $id = $guid->as_hex;
+    $self->param('id', $id);
     
     my $pid = fork;
     
@@ -37,7 +43,6 @@ sub start_optimization : StartRunmode {
         open STDERR, ">&=1";
 
         # Generate a PID file to allow progress monitoring
-        my $id = $self->session->id();
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
         my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
         my $pidloc = "$tmpdir" . "$id";
@@ -155,14 +160,12 @@ sub start_optimization : StartRunmode {
 
 }
 
-# To do next: Code waiting page, waiting perl code, perl to read data, output page.
-
 
 sub optimizer_status : Runmode {
     my $self = shift;
-
+    
     # Get ready to access PID file
-    my $id = $self->session->id();
+    my $id = $self->param('id');
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $datadir = $ENV{OPENSHIFT_DATA_DIR};
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
@@ -198,7 +201,7 @@ sub optimizer_results : Runmode {
     my $self = shift;
     
     # Load result file
-    my $id = $self->session->id();
+    my $id = $self->param('id');
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $pidloc = "$tmpdir" . "$id";
     open RESULTS, "<", $pidloc . '_results.dat' or die "Program error: Couldn't open results file";
