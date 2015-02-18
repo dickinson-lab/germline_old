@@ -154,7 +154,14 @@ sub start_optimization : StartRunmode {
         
     } else {
         # parent does this
-        sleep 1; #Wait to make sure child has time to create PID file
+        
+        #Wait until PID file is created
+        my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
+        my $pidloc = "$tmpdir" . "$id";        
+        until ( ( -e $pidloc . '_running.pid' ) || ( -e $pidloc . '_results.pid' ) ) {
+            sleep 1;
+        }
+        
         return $self->redirect("/optimize-start.pl?rm=optimizer_status");
     }
 
