@@ -19,7 +19,6 @@ use BerkeleyDB;
 use Bio::Seq;
 use Math::Random;
 use JSON;
-use Data::GUID;
 use lib '/libs/';
 use Seqscore;
 use OptimizerTools;
@@ -27,10 +26,7 @@ use OptimizerTools;
 sub start_optimization : StartRunmode {
     my $self = shift;
     
-    #Get a unique id that parent and child will share
-    my $guid = Data::GUID->new;
-    my $id = $guid->as_hex;
-    $self->param('id' => $id);
+    my $id = $self->param('id'); #Get session id
     
     my $pid = fork;
     
