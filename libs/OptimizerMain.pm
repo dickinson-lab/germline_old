@@ -19,6 +19,7 @@ use BerkeleyDB;
 use Bio::Seq;
 use Math::Random;
 use JSON;
+use Data::GUID;
 use lib '/libs/';
 use Seqscore;
 use OptimizerTools;
@@ -26,7 +27,9 @@ use OptimizerTools;
 sub start_optimization : StartRunmode {
     my $self = shift;
     
-    my $id = $self->param('id'); #Get session id
+    #Get a unique id that parent and child will share
+    my $guid = Data::GUID->new;
+    my $id = $guid->as_hex;
     
     my $pid = fork;
     
@@ -158,7 +161,7 @@ sub start_optimization : StartRunmode {
             sleep 1;
         }
         
-        return $self->redirect("/optimize-start.pl?rm=optimizer_status");
+        return $self->redirect('/optimize-start.pl?rm=optimizer_status&id=' . $id);
     }
 
 }
@@ -168,7 +171,8 @@ sub optimizer_status : Runmode {
     my $self = shift;
     
     # Get ready to access PID file
-    my $id = $self->param('id');
+    my $q = $self->query();
+    my $id = $q->param('id');
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $datadir = $ENV{OPENSHIFT_DATA_DIR};
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
@@ -204,7 +208,8 @@ sub optimizer_results : Runmode {
     my $self = shift;
     
     # Load result file
-    my $id = $self->param('id');
+    my $q = $self->query();
+    my $id = $q->param('id');
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $pidloc = "$tmpdir" . "$id";
     open RESULTS, "<", $pidloc . '_results.dat' or die "Program error: Couldn't open results file";
