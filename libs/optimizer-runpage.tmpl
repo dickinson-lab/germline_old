@@ -3,7 +3,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         $(document).ready(function run_optimizer() {
-            $.ajax(
+            $.ajax({
                 type: "POST",
                 url: "libs/optimizer-js.pl",
                 processData: false,
@@ -22,7 +22,7 @@
                 error: function() {
                     alert("An error has occurred!");
                 }
-                );
+            });
         });
     </script>
 </head>
