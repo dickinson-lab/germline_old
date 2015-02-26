@@ -9,6 +9,7 @@ use Bio::Seq;
 use HTML::Template;
 
 # Get input
+my $q = CGI->new();
 my $in_name = $q->param('name');
 my $safename = $q->escapeHTML($in_name);
 my $inseq = $q->param('sequence');
@@ -49,14 +50,14 @@ if ($seqtype eq 'AA') {
 
 # Generate page to launch optimizer
 my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-my $template = HTML::Template->new(filename => $appdir . 'libs/optimizer-runpage.tmpl')
+my $template = HTML::Template->new(filename => $appdir . 'libs/optimizer-runpage.tmpl');
 $template->param(
     SEQ_NAME => $safename;
     DNA_SEQ => $DNAseq;
     AA_SEQ => $AAseq;
     SEQ_TYPE => $seqtype;
     INTRONS => $add_introns;
-)
+);
 print "Content-Type: text/html\n\n", $template->output;
 
 
