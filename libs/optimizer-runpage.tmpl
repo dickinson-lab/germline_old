@@ -1,0 +1,26 @@
+<head>
+    <title> <TMPL_VAR NAME="TITLE"> </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function run_optimizer() {
+            $.post(libs/optimize-js.pl, {
+                    seq_name: <TMPL_VAR NAME="SEQ_NAME">
+                    dna_seq: <TMPL_VAR NAME="DNA_SEQ">
+                    aa_seq: <TMPL_VAR NAME="AA_SEQ">
+                    seq_type: <TMPL_VAR NAME="SEQ_TYPE">
+                    add_introns: <TMPL_VAR NAME="INTRONS">
+                }, function( results ) {
+                    $("#content").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
+                }, "html"
+                );
+        });
+    </script>
+</head>
+
+<body>
+    <div id='content' style=text-align:center>
+        <h2> Waiting for results... </h2>
+        <p> Your results will appear here when they are ready. </p>
+        <img src="libs/roller.gif" alt="Roller" style="width:150px;height:150px">
+    </div>
+</body>
