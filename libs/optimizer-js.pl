@@ -18,8 +18,6 @@ my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 my $sequence_lib = new BerkeleyDB::Btree
     -Filename => join('',$datadir,'sequence_lib_scores.db');
 
-die "I ran";
-
 ### SET UP ###
 
 # Get input
@@ -29,6 +27,8 @@ my $dnaseq = $q->param('dna_seq');
 my $AAseq = $q->param('aa_seq');
 my $seqtype = $q->param('seq_type');
 my $add_introns = $q->param('introns');
+
+die "I got the parameters: name = $seqname and sequence = $AAseq";
 
 
 ### IF A NUCLEOTIDE SEQUENCE WAS ENTERED, CALCULATE ITS SCORE ###
