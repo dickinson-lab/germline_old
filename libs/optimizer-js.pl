@@ -18,6 +18,8 @@ my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 my $sequence_lib = new BerkeleyDB::Btree
     -Filename => join('',$datadir,'sequence_lib_scores.db');
 
+die "I ran";
+
 ### SET UP ###
 
 # Get input
