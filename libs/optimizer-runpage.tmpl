@@ -10,7 +10,7 @@
                     seq_type: "<TMPL_VAR NAME="SEQ_TYPE">",
                     add_introns: "<TMPL_VAR NAME="INTRONS">"
                 }, function( results ) {
-                    $("#content").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
+                    $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
                 }, "html"
                 );
         });
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div id='content' style=text-align:center>
+    <div id='stuff' style=text-align:center>
         <h2> Waiting for results... </h2>
         <p> Your results will appear here when they are ready. </p>
         <img src="libs/roller.gif" alt="Roller" style="width:150px;height:150px">

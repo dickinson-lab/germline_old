@@ -28,9 +28,6 @@ my $AAseq = $q->param('aa_seq');
 my $seqtype = $q->param('seq_type');
 my $add_introns = $q->param('introns');
 
-die "I got the parameters: name = $seqname and sequence = $AAseq";
-
-
 ### IF A NUCLEOTIDE SEQUENCE WAS ENTERED, CALCULATE ITS SCORE ###
 
 my ( $input_sequence_score, $input_lowest_score, $input_n_w_lowest_score );
@@ -56,6 +53,7 @@ if ($add_introns) {
     $optseq_w_introns = OptimizerTools::addintrons( $optimization_results->{'Sequence'} );
 }
 
+die "I finished."
 
 ### DISPLAY RESULTS ###
 
