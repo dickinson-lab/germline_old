@@ -53,8 +53,6 @@ if ($add_introns) {
     $optseq_w_introns = OptimizerTools::addintrons( $optimization_results->{'Sequence'} );
 }
 
-die "I finished.";
-
 ### DISPLAY RESULTS ###
 
 #Generate HTML page with results
