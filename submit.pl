@@ -4,6 +4,7 @@ use warnings;
 
 use 5.010;
 use CGI;
+use CGI::Carp qw(fatalsToBrowser);
 use Bio::Seq;
 use HTML::Template;
 
