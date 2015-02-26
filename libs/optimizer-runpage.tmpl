@@ -4,11 +4,11 @@
     <script>
         $(document).ready(function run_optimizer() {
             $.post("libs/optimizer-js.pl", {
-                    seq_name: <TMPL_VAR NAME="SEQ_NAME">
-                    dna_seq: <TMPL_VAR NAME="DNA_SEQ">
-                    aa_seq: <TMPL_VAR NAME="AA_SEQ">
-                    seq_type: <TMPL_VAR NAME="SEQ_TYPE">
-                    add_introns: <TMPL_VAR NAME="INTRONS">
+                    seq_name: "<TMPL_VAR NAME="SEQ_NAME">",
+                    dna_seq: "<TMPL_VAR NAME="DNA_SEQ">",
+                    aa_seq: "<TMPL_VAR NAME="AA_SEQ">",
+                    seq_type: "<TMPL_VAR NAME="SEQ_TYPE">",
+                    add_introns: "<TMPL_VAR NAME="INTRONS">"
                 }, function( results ) {
                     $("#content").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
                 }, "html"
