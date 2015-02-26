@@ -3,15 +3,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         $(document).ready(function run_optimizer() {
-            $.post("libs/optimizer-js.pl", {
+            $.ajax(
+                type: "POST",
+                url: "libs/optimizer-js.pl",
+                processData: false,
+                contentType: 'multipart/form-data',
+                data: {
                     seq_name: "<TMPL_VAR NAME="SEQ_NAME">",
                     dna_seq: "<TMPL_VAR NAME="DNA_SEQ">",
                     aa_seq: "<TMPL_VAR NAME="AA_SEQ">",
                     seq_type: "<TMPL_VAR NAME="SEQ_TYPE">",
                     add_introns: "<TMPL_VAR NAME="INTRONS">"
-                }, function( results ) {
+                },
+                dataType: "html",
+                success: function( results ) {
                     $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
-                }, "html"
+                },
+                error: function() {
+                    alert("An error has occurred!")
+                }
                 );
         });
     </script>
