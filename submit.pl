@@ -52,11 +52,11 @@ if ($seqtype eq 'AA') {
 my $appdir = $ENV{OPENSHIFT_REPO_DIR};
 my $template = HTML::Template->new(filename => $appdir . 'libs/optimizer-runpage.tmpl');
 $template->param(
-    SEQ_NAME => $safename;
-    DNA_SEQ => $DNAseq;
-    AA_SEQ => $AAseq;
-    SEQ_TYPE => $seqtype;
-    INTRONS => $add_introns;
+    SEQ_NAME => $safename,
+    DNA_SEQ => $DNAseq,
+    AA_SEQ => $AAseq,
+    SEQ_TYPE => $seqtype,
+    INTRONS => $add_introns,
 );
 print "Content-Type: text/html\n\n", $template->output;
 
