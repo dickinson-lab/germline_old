@@ -57,7 +57,7 @@ if ($add_introns) {
 
 #Generate HTML page with results
 my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-my $template = HTML::Template->new(filename => $appdir . 'optimizer-results.html');
+my $template = HTML::Template->new(filename => $appdir . 'libs/optimizer-results.tmpl');
 $template->param(
         TITLE => ('Results for optimization of sequence "' . $seqname . '"'),
         DNA_INPUT => ($seqtype eq 'DNA'),
