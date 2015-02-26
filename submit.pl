@@ -9,7 +9,7 @@ use Bio::Seq;
 use HTML::Template;
 
 # Get input
-my $q = CGI->new();
+our $q = CGI->new();
 my $in_name = $q->param('name');
 my $safename = $q->escapeHTML($in_name);
 my $inseq = $q->param('sequence');
