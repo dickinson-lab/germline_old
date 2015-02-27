@@ -10,27 +10,27 @@
                 seqtype: '<TMPL_VAR NAME="SEQ_TYPE">',
                 add_introns: '<TMPL_VAR NAME="INTRONS">'
             }
-            $.ajax({
-                type: "POST",
-                url: "libs/optimizer-js.pl",
-                processData: false,
-                //contentType: 'application/json',
-                data: { data: JSON.stringify(input) },
-                dataType: "html",
-                success: function( results ) {
-                    $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
-                    //$("#response").text( results );
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus, errorThrown);
-                }
-            });
-            //$.post("libs/optimizer-js.pl",
-            //        { data: JSON.stringify(input) },
-            //        function( results ) {
-            //            $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
-            //        }
-            //    );
+            //$.ajax({
+            //    type: "POST",
+            //    url: "libs/optimizer-js.pl",
+            //    processData: false,
+            //    contentType: 'application/json',
+            //    data: { data: JSON.stringify(input) },
+            //    dataType: "html",
+            //    success: function( results ) {
+            //        $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
+            //        //$("#response").text( results );
+            //    },
+            //    error: function(jqXHR, textStatus, errorThrown) {
+            //        console.log(textStatus, errorThrown);
+            //    }
+            //});
+            $.post("libs/optimizer-js.pl",
+                    { data: JSON.stringify(input) },
+                    function( results ) {
+                        $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
+                    }
+                );
         });
     </script>
 </head>
