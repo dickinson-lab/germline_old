@@ -15,7 +15,7 @@
                 url: "libs/optimizer-js.pl",
                 processData: false,
                 contentType: 'application/json',
-                data: JSON.stringify(input),
+                data: {data: JSON.stringify(input)},
                 //dataType: "html",
                 success: function( results ) {
                     //$("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
