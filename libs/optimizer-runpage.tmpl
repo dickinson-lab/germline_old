@@ -8,13 +8,7 @@
                 url: "libs/optimizer-js.pl",
                 processData: false,
                 contentType: 'application/json',
-                data: {
-                    seq_name: "<TMPL_VAR NAME="SEQ_NAME">",
-                    dna_seq: "<TMPL_VAR NAME="DNA_SEQ">",
-                    aa_seq: "<TMPL_VAR NAME="AA_SEQ">",
-                    seq_type: "<TMPL_VAR NAME="SEQ_TYPE">",
-                    add_introns: "<TMPL_VAR NAME="INTRONS">"
-                },
+                data: { input: "<TMPL_VAR NAME="INPUT">" },
                 dataType: "html",
                 success: function( results ) {
                     $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl

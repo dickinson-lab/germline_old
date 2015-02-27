@@ -6,6 +6,7 @@ use 5.010;
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use HTML::Template;
+use JSON;
 use BerkeleyDB;
 use lib '/libs/';
 use Seqscore;
@@ -22,11 +23,13 @@ my $sequence_lib = new BerkeleyDB::Btree
 
 # Get input
 my $q = CGI->new();
-my $seqname = $q->param('seq_name');
-my $dnaseq = $q->param('dna_seq');
-my $AAseq = $q->param('aa_seq');
-my $seqtype = $q->param('seq_type');
-my $add_introns = $q->param('introns');
+my $JSONinput = $q->param('input');
+my $userinput = decode_json($JSONinput);
+my $seqname = $userinput->{'name'};
+my $dnaseq = $userinput->{'DNAseq'};
+my $AAseq = $userinput->{'AAseq'};
+my $seqtype = $userinput->{'seqtype'};
+my $add_introns = $userinput->{'add_introns'};
 
 ### IF A NUCLEOTIDE SEQUENCE WAS ENTERED, CALCULATE ITS SCORE ###
 
