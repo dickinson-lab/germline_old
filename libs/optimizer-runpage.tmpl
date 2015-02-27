@@ -19,10 +19,10 @@
                 dataType: "html",
                 success: function( results ) {
                     $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
-                    //$("#response").text( results )
+                    //$("#response").text( results );
                 },
-                error: function() {
-                    alert("An error has occurred!");
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
                 }
             });
             //$.post("libs/optimizer-js.pl",
