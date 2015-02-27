@@ -23,6 +23,7 @@ my $sequence_lib = new BerkeleyDB::Btree
 
 # Get input
 my $q = CGI->new();
+die $q->param('data');
 my $userinput = decode_json($q->param('data'));
 my $seqname = $userinput->{'name'};
 my $dnaseq = $userinput->{'DNAseq'};
