@@ -14,7 +14,7 @@
                 type: "POST",
                 url: "libs/optimizer-js.pl",
                 data: { data: JSON.stringify(input) },
-                timeout: 2000,
+                timeout: 3600000,
                 dataType: "html",
                 success: function( results ) {
                     $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
@@ -22,7 +22,14 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
-                    $("#stuff").text( errorThrown );
+                    if (errorThrown == "timeout") {
+                        $("#stuff").html( "<h2> Timeout error </h2>" + 
+                                          "<p> Your request took too long to process.  Please try again. <br/>" +
+                                          "If you continue to experience this error, contact ddickins@live.unc.edu for help. </p>")
+                    } else {
+                        $("#stuff").html( "<h2> Program error </h2>" + 
+                                          "<p>" + errorThrown + "</p>")
+                    }
                 }
             });
             //$.post("libs/optimizer-js.pl",
