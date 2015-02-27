@@ -3,12 +3,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         $(document).ready(function run_optimizer() {
+            var input = {
+                name: '<TMPL_VAR NAME="SEQ_NAME">',
+                DNAseq: '<TMPL_VAR NAME="DNA_SEQ">',
+                AAseq: '<TMPL_VAR NAME="AA_SEQ">',
+                seqtype: '<TMPL_VAR NAME="SEQ_TYPE">',
+                add_introns: '<TMPL_VAR NAME="INTRONS">'
+            }
             $.ajax({
                 type: "POST",
                 url: "libs/optimizer-js.pl",
                 processData: false,
                 contentType: 'application/json',
-                data: <TMPL_VAR NAME="INPUT">,
+                data: JSON.stringify(input),
                 dataType: "html",
                 success: function( results ) {
                     $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
