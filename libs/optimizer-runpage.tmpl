@@ -14,7 +14,7 @@
                 type: "POST",
                 url: "libs/optimizer-js.pl",
                 data: { data: JSON.stringify(input) },
-                timeout: 3600000,
+                timeout: 3600, //000,
                 dataType: "html",
                 success: function( results ) {
                     $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
