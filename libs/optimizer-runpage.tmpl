@@ -8,7 +8,7 @@
                 url: "libs/optimizer-js.pl",
                 processData: false,
                 contentType: 'application/json',
-                data: { input: "<TMPL_VAR NAME="INPUT">" },
+                data: <TMPL_VAR NAME="INPUT">,
                 dataType: "html",
                 success: function( results ) {
                     $("#stuff").html(results); // Overwrites the contents of div 'content' with HTML-formatted results returned by optimize.pl
