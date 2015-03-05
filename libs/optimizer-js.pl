@@ -11,6 +11,7 @@ use BerkeleyDB;
 use lib '/libs/';
 use Seqscore;
 use OptimizerTools;
+use Working;
 
 #$| = 1;  # Disable buffering
 
@@ -20,6 +21,9 @@ my $sequence_lib = new BerkeleyDB::Btree
     -Filename => join('',$datadir,'sequence_lib_scores.db');
 
 ### SET UP ###
+
+print "Content-Type: text/html\n\n";
+Working::start(120);
 
 # Get input
 my $q = CGI->new();
@@ -55,6 +59,8 @@ if ($add_introns) {
     $optseq_w_introns = OptimizerTools::addintrons( $optimization_results->{'Sequence'} );
 }
 
+Working::stop();
+
 ### DISPLAY RESULTS ###
 
 #Generate HTML page with results
@@ -73,5 +79,5 @@ $template->param(
         OPT_SEQ => $optimization_results->{'Sequence'},
         OPT_SEQ_INTRONS => $optseq_w_introns,
 );
-print "Content-Type: text/html\n\n", $template->output;
+print $template->output;
 
