@@ -13,7 +13,7 @@ use Seqscore;
 use OptimizerTools;
 use Working;
 
-#$| = 1;  # Disable buffering
+$| = 1;  # Disable buffering
 
 my $datadir = $ENV{OPENSHIFT_DATA_DIR};
 

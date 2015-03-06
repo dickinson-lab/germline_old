@@ -35,6 +35,7 @@ sub stop
 
 sub working
   {
+    $| = 1;  # Disable buffering
     print "<!-- working... -->\n";
     alarm $working_time;
   }
