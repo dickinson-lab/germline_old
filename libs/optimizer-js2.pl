@@ -64,7 +64,7 @@ if (!defined $pid) {
     
     my ( $input_sequence_score, $input_lowest_score, $input_n_w_lowest_score );
     if ($seqtype eq 'DNA') {
-        my @input_coding_sequence = unpack("(A3)*", $seqobj->seq());
+        my @input_coding_sequence = unpack("(A3)*", $dnaseq);
         ( $results->{'input_sequence_score'}, $results->{'input_lowest_score'}, $results->{'input_n_w_lowest_score'} ) = Seqscore::score_sequence( \@input_coding_sequence, $sequence_lib );
     } else {
         $results->{'input_sequence_score'} = 0;
