@@ -5,6 +5,7 @@ use warnings;
 
 use 5.010;
 use File::Pid;
+use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use BerkeleyDB;
 use Bio::Seq;
