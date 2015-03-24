@@ -71,67 +71,33 @@ sub start_optimization : StartRunmode {
         my $seqtype = $userinput->{'seqtype'};
         my $add_introns = $userinput->{'add_introns'};
         
-        # Check sequence for invalid characters
-        my $bio_seq = Bio::Seq->new();
-        
-        if ( ! $bio_seq->validate_seq($safeseq) ) {
-            $error .= "You entered an invalid sequence\n";
-        }
-        
-        # If sequence is ok, make a Bio::Seq object out of it
-        my $seqobj = Bio::Seq->new( -seq => $safeseq );
-        
-        # Check sequence for correct type, generate amino acid sequence
-        my $AAseq;
-        if ($seqtype eq 'AA') {
-            if ( $seqobj->alphabet ne 'protein' ) {
-                $error .= "You selected \"Amino Acid,\" but your input doesn't appear to be an amino acid sequence. Please check the sequence and try again.\n";
-            }
-            $AAseq = $seqobj->seq();
-        } elsif ($seqtype eq 'DNA') {
-            
-            if ( $seqobj->alphabet ne 'dna') {
-                $error .= "You selected \"DNA,\" but your input doesn't appear to be a nucleotide sequence. Please check the sequence and try again.\n";
-            }
-            my $trans = $seqobj->translate();
-            $AAseq = $trans->seq();
-        } else {
-            $error .= "Program error :-\(\n"; #You'd only get this if the HTML form returned the wrong value.
-        }
-        
-        # If everything's ok, go ahead
         my $results = {}; #Get a pointer to an empty array that will hold the results
-        if ($error) {
-            $results->{'error'} = $error;
+        
+        ### If a nucleotide sequence was entered, calculate its score ###
+        
+        my ( $input_sequence_score, $input_lowest_score, $input_n_w_lowest_score );
+        if ($seqtype eq 'DNA') {
+            my @input_coding_sequence = unpack("(A3)*", $dnaseq);
+            ( $results->{'input_sequence_score'}, $results->{'input_lowest_score'}, $results->{'input_n_w_lowest_score'} ) = Seqscore::score_sequence( \@input_coding_sequence, $sequence_lib );
         } else {
+            $results->{'input_sequence_score'} = 0;
+            $results->{'input_lowest_score'} = 0;
+            $results->{'input_n_w_lowest_score'} = 0;
+        }
         
-            ### If a nucleotide sequence was entered, calculate its score ###
-            
-            my ( $input_sequence_score, $input_lowest_score, $input_n_w_lowest_score );
-            if ($seqtype eq 'DNA') {
-                my @input_coding_sequence = unpack("(A3)*", $dnaseq);
-                ( $results->{'input_sequence_score'}, $results->{'input_lowest_score'}, $results->{'input_n_w_lowest_score'} ) = Seqscore::score_sequence( \@input_coding_sequence, $sequence_lib );
-            } else {
-                $results->{'input_sequence_score'} = 0;
-                $results->{'input_lowest_score'} = 0;
-                $results->{'input_n_w_lowest_score'} = 0;
-            }
-            
-            
-            ### Optimize the sequence ###
-            
-            my $optimization_results = OptimizerTools::optimize($sequence_lib, $AAseq);
-            $results = {%$results, %$optimization_results};
-            
-            ### Optionally add introns ###
-            
-            my $optseq_w_introns;
-            if ($add_introns) {
-                $results->{'optseq_w_introns'} = OptimizerTools::addintrons( $optimization_results->{'Sequence'} );
-            } else {
-                $results->{'optseq_w_introns'} = '';
-            }
         
+        ### Optimize the sequence ###
+        
+        my $optimization_results = OptimizerTools::optimize($sequence_lib, $AAseq);
+        $results = {%$results, %$optimization_results};
+        
+        ### Optionally add introns ###
+        
+        my $optseq_w_introns;
+        if ($add_introns) {
+            $results->{'optseq_w_introns'} = OptimizerTools::addintrons( $optimization_results->{'Sequence'} );
+        } else {
+            $results->{'optseq_w_introns'} = '';
         }
         
         ### PRODUCE AN OUTPUT FILE TO BE READ BY THE PARENT ###
