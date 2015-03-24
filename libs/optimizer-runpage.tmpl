@@ -10,10 +10,11 @@
                 seqtype: '<TMPL_VAR NAME="SEQ_TYPE">',
                 add_introns: '<TMPL_VAR NAME="INTRONS">'
             }
+            var startTime = performance.now();
             //This AJAX call kicks off the calculation
             $.ajax({
                 type: "POST",
-                url: "libs/optimizer-js2.pl",
+                url: "libs/optimize-start.pl?rm=start_optimization",
                 data: { data: JSON.stringify(input) },
                 timeout: 3600000,
                 dataType: "html",
@@ -29,35 +30,34 @@
                     }
                 }, 
                 success: function( jobID ) {
+                    $("#response").text( "Job ID: " + jobID );
                     
                     // setInterval is a weird JS way of running a loop every few seconds
                     var intervalHandle = setInterval( function() { // Code below is the loop body
                         
                         //This AJAX call checks to see if the process is still running
                         $.ajax({
-                            type: "HEAD",
-                            url: jobID + "_running.pid",
-                            cache: false,
-                            async: false,
-                            success: function() { // If we found the file, then the process is still running
-                                $("#test").text( "PID file found!");
+                            type: "POST",
+                            url: "libs/optimize_start.pl?rm=optimizer_status",
+                            dataType: "json",
+                            error: function (jqXHR1, textStatus1, errorThrown1) { // Something when wrong checking status
+                                $("#stuff").html( "<h2> Program error </h2>" + 
+                                                    "<p> Could not get status of job. </p>" +
+                                                    "<p>" + textStatus1 + ": " + errorThrown1 + "</p>" + 
+                                                    "<p> Contact ddickins@live.unc.edu for help </p>" );
                             },
-                            error: function (jqXHR1, textStatus1, errorThrown1) { // An error here may indicate that the process is complete
-                                // This AJAX call tries to load the result file
-                                $.ajax({
-                                    type: "GET",
-                                    url: jobID + "_results.dat",
-                                    async: false,
-                                    success: function() { // If we found the results file, then the process is complete; display results
-                                        // Code to display results
-                                        $("#test").text( "Results file found!" );
-                                    },
-                                    error: function (jqXHR2, textStatus2, errorThrown2) { // If this one throws an error, then we have no PID file and no results file; this is bad.
-                                        $("#stuff").html( "<h2> Program error </h2>" + 
-                                                          "<p> Could not locate PID file or results file. </p>" +
-                                                          "<p> Contact ddickins@live.unc.edu for help </p>" );
-                                    }
-                                });
+                            success: function( response ) { 
+                                var results = JSON.parse(response);
+                                if ( results.status == "working" ) {
+                                    var currentTime = performance.now();
+                                    var elapsedTime = Math.round( (currentTime - startTime) / 1000 );
+                                    $("#time").text( "Elapsed time since submission: " + elapsedTime + " seconds" );
+                                } else if ( results.status == "complete" ) {
+                                    $("stuff").html( results.htmlOut );
+                                } else {
+                                    $("stuff").html( "<h2> Program error </h2>" +
+                                                     "<p> Germline optimizer failed to return results </p>");
+                                }
                             }
                         });
                         
@@ -72,8 +72,9 @@
     <div id='stuff'>
         <div style=text-align:center>
             <h2> Waiting for results... </h2>
-            <p id=response> Your results will appear here when they are ready. </p>
-            <p id=test> File not found. </p>
+            <p> Your results will appear here when they are ready </p>
+            <p id=response>  </p>
+            <p id=time> Elapsed time since submission: 0 seconds </p>
             <img src="libs/roller.gif" alt="Roller" style="width:150px;height:150px">
         </div>
     </div>

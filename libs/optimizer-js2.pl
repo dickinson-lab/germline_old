@@ -116,5 +116,5 @@ if (!defined $pid) {
     }
     
     #Return the location of the tmp files to the client
-    print "Content-Type: text/html\n\n", $pidloc;
+    print "Content-Type: text/html\n\n", $id;
 }
