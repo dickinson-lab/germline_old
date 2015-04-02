@@ -188,11 +188,10 @@ sub optimizer_status : Runmode {
                 OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
         );
         $response->{'htmlOut'} = $template->output;
-        
-        # Return the results
-        my $JSONresponse = encode_json($response);
-        return $JSONresponse;
     }
+    # Return the results
+    my $JSONresponse = encode_json($response);
+    return $JSONresponse;
 }
 
 sub optimizer_results : Runmode {

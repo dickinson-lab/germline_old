@@ -45,6 +45,7 @@
                                                     "<p> Could not get status of job. </p>" +
                                                     "<p>" + textStatus1 + ": " + errorThrown1 + "</p>" + 
                                                     "<p> Contact ddickins@live.unc.edu for help </p>" );
+                                clearInterval(intervalHandle);
                             },
                             success: function( response ) { 
                                 var results = JSON.parse(response);
@@ -54,9 +55,11 @@
                                     $("#time").text( "Elapsed time since submission: " + elapsedTime + " seconds" );
                                 } else if ( results.status == "complete" ) {
                                     $("stuff").html( results.htmlOut );
+                                    clearInterval(intervalHandle);
                                 } else {
                                     $("stuff").html( "<h2> Program error </h2>" +
                                                      "<p> Germline optimizer failed to return results </p>");
+                                    clearInterval(intervalHandle);
                                 }
                             }
                         });
