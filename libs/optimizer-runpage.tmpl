@@ -38,7 +38,8 @@
                         //This AJAX call checks to see if the process is still running
                         $.ajax({
                             type: "POST",
-                            url: "libs/optimize-start.pl?rm=optimizer_status",
+                            url: "libs/optimize-start.pl",
+                            rm: "optimizer_status",
                             dataType: "json",
                             error: function (jqXHR1, textStatus1, errorThrown1) { // Something when wrong checking status
                                 $("#stuff").html( "<h2> Program error </h2>" + 
