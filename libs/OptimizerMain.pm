@@ -29,6 +29,7 @@ sub start_optimization : StartRunmode {
     #Get a unique id that parent and child will share
     my $guid = Data::GUID->new;
     my $id = $guid->as_hex;
+    $self->param('id', $id);
     
     my $pid = fork;
     
@@ -139,7 +140,7 @@ sub optimizer_status : Runmode {
     
     # Get ready to access PID file
     my $q = $self->query();
-    my $id = $q->param('id');
+    my $id = $self->param('id');
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $datadir = $ENV{OPENSHIFT_DATA_DIR};
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
@@ -199,7 +200,7 @@ sub optimizer_results : Runmode {
     
     # Load result file
     my $q = $self->query();
-    my $id = $q->param('id');
+    my $id = $self->param('id');
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $pidloc = "$tmpdir" . "$id";
     open RESULTS, "<", $pidloc . '_results.dat' or die "Program error: Couldn't open results file";
