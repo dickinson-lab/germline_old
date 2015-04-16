@@ -54,7 +54,7 @@
                                     var elapsedTime = Math.round( (currentTime - startTime) / 1000 );
                                     $("#time").text( "Elapsed time since submission: " + elapsedTime + " seconds" );
                                 } else if ( results.status == "complete" ) {
-                                    $("stuff").html( results.htmlOut );
+                                    $("stuff").text( results.htmlOut );
                                     clearInterval(intervalHandle);
                                 } else {
                                     $("stuff").html( "<h2> Program error </h2>" +
