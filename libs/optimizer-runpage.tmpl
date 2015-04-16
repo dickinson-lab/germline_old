@@ -14,7 +14,7 @@
             //This AJAX call kicks off the calculation
             $.ajax({
                 type: "POST",
-                url: "libs/optimize-start.pl?rm=start_optimization",
+                url: "libs/optimize-start.pl",
                 data: { data: JSON.stringify(input) },
                 timeout: 3600000,
                 dataType: "html",
@@ -39,7 +39,7 @@
                         $.ajax({
                             type: "POST",
                             url: "libs/optimize-start.pl",
-                            rm: "optimizer_status",
+                            data: { rm: "optimizer_status" },
                             dataType: "json",
                             error: function (jqXHR1, textStatus1, errorThrown1) { // Something when wrong checking status
                                 $("#stuff").html( "<h2> Program error </h2>" + 
