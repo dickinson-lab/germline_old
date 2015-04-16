@@ -1,4 +1,3 @@
-<html>
 <head>
     <title> <TMPL_VAR NAME="TITLE"> </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -41,7 +40,7 @@
                             type: "POST",
                             url: "libs/optimize-start.pl",
                             data: { rm: "optimizer_status", id: jobID },
-                            dataType: "json",
+                            dataType: "html",
                             error: function (jqXHR1, textStatus1, errorThrown1) { // Something when wrong checking status
                                 $("#stuff").html( "<h2> Program error </h2>" + 
                                                     "<p> Could not get status of job. </p>" +
@@ -84,4 +83,3 @@
         </div>
     </div>
 </body>
-</html>
