@@ -29,8 +29,7 @@ sub start_optimization : StartRunmode {
     #Get a unique id that parent and child will share
     my $guid = Data::GUID->new;
     my $id = $guid->as_hex;
-    $self->param('id', $id);
-    
+        
     my $pid = fork;
     
     if (!defined $pid) {
@@ -140,7 +139,7 @@ sub optimizer_status : Runmode {
     
     # Get ready to access PID file
     my $q = $self->query();
-    my $id = $self->param('id');
+    my $id = $q->param('id');
     my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
     my $datadir = $ENV{OPENSHIFT_DATA_DIR};
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
@@ -173,7 +172,7 @@ sub optimizer_status : Runmode {
         close RESULTS;
         my $results = decode_json($JSONresults);  # $results now contains a pointer to the results of optimization
         
-        #G enerate HTML page with results
+        #Generate HTML page with results
         my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
         $template->param(
                 TITLE => ('Results for optimization of sequence "' . $results->{'name'} . '"'),
