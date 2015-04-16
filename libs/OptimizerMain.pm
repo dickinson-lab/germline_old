@@ -173,7 +173,7 @@ sub optimizer_status : Runmode {
         my $results = decode_json($JSONresults);  # $results now contains a pointer to the results of optimization
         
         #Generate HTML page with results
-        my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
+        my $template = $self->load_tmpl($appdir . 'optimizer-results.tmpl');
         $template->param(
                 TITLE => ('Results for optimization of sequence "' . $results->{'name'} . '"'),
                 DNA_INPUT => ($results->{'seqtype'} eq 'DNA'),
