@@ -103,7 +103,7 @@ sub start_optimization : StartRunmode {
         ### PRODUCE AN OUTPUT FILE TO BE READ BY THE PARENT ###
         
         # Save query parameters
-        $results->{'name'} = $q->param('name');
+        $results->{'name'} = $seqname;
         $results->{'seqtype'} = $seqtype;
         $results->{'introns'} = $add_introns;
         
