@@ -194,36 +194,4 @@ sub optimizer_status : Runmode {
     return $JSONresponse;
 }
 
-sub optimizer_results : Runmode {
-    my $self = shift;
-    
-    # Load result file
-    my $q = $self->query();
-    my $id = $self->param('id');
-    my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
-    my $pidloc = "$tmpdir" . "$id";
-    open RESULTS, "<", $pidloc . '_results.dat' or die "Program error: Couldn't open results file";
-    my $JSONresults = <RESULTS>;
-    close RESULTS;
-    my $results = decode_json($JSONresults);  # $results now contains a pointer to the results of optimization
-    
-    #Generate HTML page with results
-    my $appdir = $ENV{OPENSHIFT_REPO_DIR};
-    my $template = $self->load_tmpl($appdir . 'optimizer-results.html');
-    $template->param(
-            TITLE => ('Results for optimization of sequence "' . $results->{'name'} . '"'),
-            DNA_INPUT => ($results->{'seqtype'} eq 'DNA'),
-            INPUT_SEQ_SCORE => sprintf("%.1f", $results->{'input_sequence_score'}),
-            INPUT_LOWEST_SCORE => sprintf("%.1f", $results->{'input_lowest_score'}),
-            INPUT_N_W_LOWEST_SCORE => $results->{'input_n_w_lowest_score'},
-            RESULT_SEQ_SCORE => sprintf("%.1f", $results->{'Sequence_score'}),
-            RESULT_LOWEST_SCORE => sprintf("%.1f", $results->{'Lowest_score'}),
-            RESULT_N_W_LOWEST_SCORE => $results->{'Words_w_lowest_score'},
-            INTRONS => $results->{'introns'},
-            OPT_SEQ => $results->{'Sequence'},
-            OPT_SEQ_INTRONS => $results->{'optseq_w_introns'},
-    );
-    return $template->output;
-}
-
 1;
