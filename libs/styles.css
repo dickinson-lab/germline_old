@@ -13,8 +13,7 @@ body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color:#666;
 	font-size: small;
-	text-align: center; /* this centers the container in IE 5* browsers. */
-	background: url(../images/template_bg_full_wide.jpg) no-repeat center top;
+	text-align: left; 
 	}
         
 #content {
@@ -29,9 +28,11 @@ h1 {
    font-size:197%;
    font-weight:normal;
    font-family: Georgia, "Times New Roman", Times, serif;
+   text-transform:uppercase;
    margin: 0 0 12px 0;
    line-height: 1.2em;
    color: #2376A1;
+   text-align: center;
 	}
 
 h2 {
@@ -46,6 +47,7 @@ h2 {
 	background: #56a0d3 url(../images/h2_bg_repeat.gif) repeat-x left bottom;
 	border-top: #9bbdde solid 1px;
 	position:relative;
+	text-align: center;
 	}
 
 #header h2 {
