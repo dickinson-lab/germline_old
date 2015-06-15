@@ -44,6 +44,7 @@ h2 {
 	color:#fff;
 	text-transform:uppercase;
 	text-shadow:#4f7eac 0 0.05em 0.05em;
+	background: #56a0d3; /* url(../images/h2_bg_repeat.gif) repeat-x left bottom;*/
 	border-top: #9bbdde solid 1px;
 	position:relative;
 	text-align: center;
