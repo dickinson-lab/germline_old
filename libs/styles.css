@@ -7,6 +7,7 @@ samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol,
 	vertical-align:baseline;
 	background:transparent;
 	font-size: 100%;
+	text-align: left;
 	}
 
 body {
