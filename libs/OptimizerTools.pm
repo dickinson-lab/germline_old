@@ -252,6 +252,7 @@ sub addintrons {
         M: while (!$found_junction) { # This loop looks for the AGR motif
             my $start_point = $exon_length * ($l+1) + $offset;
             if ( $start_point <= $exon_start + 20 ) { # This means we can't find a place to put the intron without making the preceeding exon too short (<20 bp)
+                $outseq = $outseq . $CDS[$last_exon_end];
                 next L;
             }
             my $candidate_junction = join ('', @CDS[ $start_point .. $start_point+2 ] );
