@@ -3,8 +3,6 @@ use strict;
 use warnings;
 
 use 5.010;
-use lib '/libs/Module-Build-0.4211/lib/Module';
-use Build;
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use Bio::Seq;
