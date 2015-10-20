@@ -20,6 +20,7 @@ use Math::Random;
 use JSON;
 use Data::GUID;
 use Progress::Any::Output;
+use Progress::Any::Output::Callback;
 use lib './libs/';
 use Seqscore;
 use OptimizerTools;
