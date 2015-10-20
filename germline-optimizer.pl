@@ -3,13 +3,12 @@ use strict;
 use warnings;
 
 use 5.010;
+use lib '/libs/Module-Build-0.4211/lib/Module';
+use Build;
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use Bio::Seq;
 use HTML::Template;
-
-# To do next: Pass data as a JSON-encoded string instead of individual parameters.
-# See http://stackoverflow.com/questions/17810063/jquery-ajax-post-huge-string-value
 
 # Get input
 our $q = CGI->new();
@@ -34,6 +33,7 @@ my $seqobj = Bio::Seq->new( -seq => $safeseq );
 # Check sequence for correct type, generate amino acid sequence
 my $DNAseq = '';
 my $AAseq;
+my $warning = '';
 if ($seqtype eq 'AA') {
     if ( $seqobj->alphabet ne 'protein' ) {
         error("You selected \"Amino Acid,\" but your input doesn't appear to be an amino acid sequence. Please check the sequence and try again.");
@@ -47,6 +47,14 @@ if ($seqtype eq 'AA') {
     my $trans = $seqobj->translate();
     $AAseq = $trans->seq();
     $DNAseq = $seqobj->seq();
+    
+    my $AAlength = length($AAseq);
+    if ( $AAseq =~ /\*/ && $-[0] != $AAlength ) {
+        $warning = "You entered a nucleotide sequence that contains an internal stop codon.  Only the portion before the stop codon will be optimized.";
+        $AAseq = substr($AAseq, 0, $-[0]);
+        $DNAseq = substr($DNAseq, 0, $-[0] * 3 );
+    }
+    
 } else {
     error("Program error :-\("); #You'd only get this if the HTML form returned the wrong value.
 }
@@ -60,6 +68,7 @@ $template->param(
     AA_SEQ => $AAseq,
     SEQ_TYPE => $seqtype,
     INTRONS => $add_introns,
+    WARNING => $warning
 );
 print "Content-Type: text/html\n\n", $template->output;
 

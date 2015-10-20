@@ -12,6 +12,7 @@ use warnings;
 use BerkeleyDB;
 use Math::Random;
 use POSIX;
+use Progress::Any;
 use lib 'libs/Seqscore.pm';
 
 #use Data::Dumper;
@@ -19,6 +20,9 @@ use lib 'libs/Seqscore.pm';
 ###################################################################
 
 sub optimize {
+    my $progress = Progress::Any -> get_indicator( task => 'optimization' );
+    $progress -> update( message => 'Setting up...');
+    
     # Get input
     my $sequence_lib = shift;
     my $AA = shift;
@@ -96,6 +100,7 @@ sub optimize {
     
     
     #### Take a first guess at an optimized sequence by plugging in the highest-scoring words first, then filling in the gaps with the best available options ###
+    $progress->update( message => 'Making a first guess at an optimized sequence...' );
     
     # Start by producing a list of indices with those pointing to the highest-scoring words at the top
     my @indices = 0 .. $AA_length-4;
@@ -156,6 +161,7 @@ sub optimize {
     my @optimized_sequences;
     
     H: for (my $h = 0; $h < 10; $h++ ) {  # Since the interative process is random, do it 10 times to make sure we don't get stuck in a local minimum
+        $progress->update( message => join('', 'Refining sequence... optimization round ', $h+1, ' of 10'  ) );
         my $counter = 0;  # Keeps a count of the number of iterations done.
         
         my @new_seq = @coding_sequence; # Make a copy of @coding_sequence so we can reuse it later
@@ -199,6 +205,8 @@ sub optimize {
         }
         
         # Calculate the score for the optimized sequence and save the results
+        $progress->update(message => 'Finishing...');
+        
         my ( $final_sequence_score, $final_lowest_score, $final_n_w_lowest_score ) = Seqscore::score_sequence( \@new_seq, $sequence_lib );
         my $new_seq = join('',@new_seq);
         I: foreach my $i (@optimized_sequences) {   # This loop ensures that we only save unique results.  Might not be the most efficient way to do it, but good enough

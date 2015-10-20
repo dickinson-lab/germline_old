@@ -4,14 +4,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         $(document).ready(function run_optimizer() {
+            
+            // Display warning if necessary
+            var warntxt = '<TMPL_VAR NAME="WARNING">';
+            if (warntxt.length > 0) {
+                $("#warning").text(warntxt);
+            } else {
+                $("#warning").hide();
+            }
+            
+            // Set up for optimiziation
             var input = {
                 name: '<TMPL_VAR NAME="SEQ_NAME">',
                 DNAseq: '<TMPL_VAR NAME="DNA_SEQ">',
                 AAseq: '<TMPL_VAR NAME="AA_SEQ">',
                 seqtype: '<TMPL_VAR NAME="SEQ_TYPE">',
-                add_introns: '<TMPL_VAR NAME="INTRONS">'
+                add_introns: '<TMPL_VAR NAME="INTRONS">'                
             }
             var startTime = performance.now();
+            
             //This AJAX call kicks off the calculation
             $.ajax({
                 type: "POST",
@@ -54,6 +65,7 @@
                                     var currentTime = performance.now();
                                     var elapsedTime = Math.round( (currentTime - startTime) / 1000 );
                                     $("#time").text( "Elapsed time since submission: " + elapsedTime + " seconds" );
+                                    $("#status").text( "Current status of job: " + results.message );
                                 } else if ( results.status == "complete" ) {
                                     $("#stuff").html( results.htmlOut );
                                     clearInterval(intervalHandle);
@@ -76,8 +88,9 @@
     <div id='stuff'>
         <div style=text-align:center>
             <h2> Waiting for results... </h2>
+            <p id='warning' style=color:red> Here's my warning text</p>
             <p> Your results will appear here when they are ready </p>
-            <p id=response>  </p>
+            <p id=status>  </p>
             <p id=time> Elapsed time since submission: 0 seconds </p>
             <img src="libs/roller.gif" alt="Roller" style="width:150px;height:150px">
         </div>

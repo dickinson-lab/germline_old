@@ -5,7 +5,7 @@ print <<EOF
 <!doctype html>
 <html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=http://germline-ddickins.apps.unc.edu/optimizer.html" >
+  <meta http-equiv="refresh" content="0; url=http://germline-goldsteinlab.vipapps.unc.edu/optimizer.html" >
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Welcome to OpenShift</title>

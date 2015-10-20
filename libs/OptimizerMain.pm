@@ -12,14 +12,15 @@ use base 'CGI::Application';
 use CGI::Application::Plugin::AutoRunmode;
 use CGI::Application::Plugin::Session;
 use CGI::Application::Plugin::Redirect;
-use File::Pid;
+use PID::File;
 use CGI::Carp qw(fatalsToBrowser);
 use BerkeleyDB;
 use Bio::Seq;
 use Math::Random;
 use JSON;
 use Data::GUID;
-use lib '/libs/';
+use Progress::Any::Output;
+use lib './libs/';
 use Seqscore;
 use OptimizerTools;
 
@@ -43,11 +44,27 @@ sub start_optimization : StartRunmode {
         # Generate a PID file to allow progress monitoring
         my $appdir = $ENV{OPENSHIFT_REPO_DIR};
         my $tmpdir = $ENV{OPENSHIFT_TMP_DIR};
-        my $pidloc = "$tmpdir" . "$id";
-        my $pidfile = File::Pid->new({
-            file => ($pidloc . '_running.pid')
-        });
-        $pidfile -> write;
+        our $pidloc = "$tmpdir" . "$id";
+        my $pidfile = PID::File->new;
+        $pidfile -> file($pidloc . '_running.pid');
+        if ($pidfile -> running) {
+            die "Attempted to create duplicate process";
+        }
+        unless ($pidfile -> create) {
+            die "Could not create PID file";
+        }
+        $pidfile->guard;
+        
+        # Set up progress monitoring using Progress::Any
+        Progress::Any::Output -> set('Callback', callback => sub {
+                                            my ($self, %args) = @_;
+                                            my $status = {};
+                                            $status->{'message'} = $args{message};
+                                            my $JSONstatus = encode_json($status);        
+                                            open STATUS, ">", $pidloc . '_status.dat';
+                                            print STATUS $JSONstatus;
+                                            close STATUS;
+                                    });                              
         
         ### DO THE GERMLINE OPTIMIZATION ###
         
@@ -145,9 +162,8 @@ sub optimizer_status : Runmode {
     my $appdir = $ENV{OPENSHIFT_REPO_DIR};
     my $pidloc = "$tmpdir" . "$id";
     
-    my $pidfile = File::Pid->new({
-        file => $pidloc . '_running.pid'
-    });
+    my $pidfile = PID::File->new;
+    $pidfile -> file($pidloc . '_running.pid');
     
     # Check if process is still running
     my $still_running = 0;
@@ -163,6 +179,18 @@ sub optimizer_status : Runmode {
     my $response = {};
     if ($still_running) {
         $response->{'status'} = 'working';
+        # Load status file and retrieve status message
+        
+        # To do next: Forget about the try/catch syntax, code it in native Perl.
+        if ( open ( PROGRESS, "<", $pidloc . '_status.dat' ) ) {
+            my $JSONprogress = <PROGRESS>;
+            close PROGRESS;
+            my $progress = decode_json($JSONprogress);
+            $response->{'message'} = $progress->{'message'};
+        } else {
+            $response->{'message'} = '';
+        };
+        
     } else {
         $response->{'status'} = 'complete';
         
