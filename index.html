@@ -1,0 +1,57 @@
+    <head>
+        <link rel="stylesheet" href="libs/styles.css" type="text/css" media="screen"/>
+        <title>C. elegans Germline Optimizer</title>
+    </head>
+    
+    
+    <body>
+        <!--<div class="header">-->
+        <!--    <img src="../logo.png" />-->
+        <!--</div>-->
+        
+        <div class="content">
+        
+        <h1 style="text-align: left;"> <i>C. elegans</i> Germline Optimizer</h1>
+        <div class="description">
+            <p> This is a tool for designing protein coding sequences to evade piRNA-mediated silencing in the <i>C. elegans</i> germline. <br>
+                The optimization algorithm is currently unpublished. Please inform <a href=mailto:ddickins@live.unc.edu>Dan Dickinson </a>before publishing any results obtained using this tool. </p>            
+        </div>
+    
+        <form action="germline-optimizer.pl" method="post" name="frmOptimization">
+       
+            <div class="row">
+                <div class="field_name">Sequence Name (optional)</div>
+                <div class="field_value"><input type="text" id="gene" name="name" value="" /></div>
+            </div>
+            
+            <div class="row">
+                <div class="field_name">Sequence</div>
+                <div class="field_value"><textarea id="sequence" name="sequence" rows="8" cols="90"></textarea></div>
+            </div>
+            
+            <div class="row">
+                <div class="field_value">
+                <input type="radio" name="seq_type" value="AA" checked> Amino Acid Sequence<br>
+                <input type="radio" name="seq_type" value="DNA"> DNA Sequence (Make sure sequence doesn't contain introns)</div>
+            </div>
+            
+            <h2 style="float: left;"> Options</h2> <br>
+            
+            <div class="row">
+                <div class="field_name">&nbsp;</div>
+                <div class="field_value">
+                    <input type="checkbox" id="introns" name="introns" checked />Add synthetic introns (one intron will be added per 300 base pairs)
+                </div>
+            </div>
+            
+            
+            <div class="row">
+                <input type="submit" value="Optimize"/> 
+            </div>
+            
+        </form>
+        
+        </div>
+ 
+    </body>
+
