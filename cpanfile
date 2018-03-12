@@ -1,5 +1,5 @@
 requires "CGI" => "0";
-requires "CGI::Carp qw(fatalsToBrowser)" => "0";
+requires "CGI::Carp" => "0";
 requires "Bio::Seq" => "0";
 requires "HTML::Template" => "0";
 requires "CGI::Application" => "0";
